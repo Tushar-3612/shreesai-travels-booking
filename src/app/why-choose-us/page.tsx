@@ -1,0 +1,66 @@
+import type { Metadata } from "next";
+import Navbar from "@/components/Navbar";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import FeaturedPackages from "@/components/FeaturedPackages";
+import Footer from "@/components/Footer";
+import JsonLd from "@/components/packages/JsonLd";
+import { getSiteSnapshot } from "@/lib/cms/site";
+
+export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Why Choose Us | Shirdi Car Rental & Taxi Service",
+  description:
+    "Discover why travellers trust Shirdi Car Rental - professional drivers, 24x7 service, clean cars, affordable fares, safe journeys and instant booking.",
+  openGraph: {
+    title: "Why Choose Us | Shirdi Car Rental",
+    description:
+      "Professional drivers, clean cars, transparent fares and 24x7 support - the reasons travellers pick Shirdi Car Rental.",
+    type: "website",
+    locale: "en_IN",
+    siteName: "Shirdi Car Rental",
+  },
+  alternates: { canonical: "/why-choose-us" },
+  robots: { index: true, follow: true },
+};
+
+export default function WhyChooseUsPage() {
+  const data = getSiteSnapshot();
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    name: `Why Choose ${data.settings.businessName}`,
+    description: metadata.description,
+    url: "https://www.shirdicarrental.com/why-choose-us",
+    about: {
+      "@type": "LocalBusiness",
+      name: data.settings.businessName,
+      telephone: data.settings.phone,
+    },
+  };
+
+  return (
+    <>
+      <JsonLd data={schema} />
+      <Navbar />
+      <main className="pt-10 lg:pt-14">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <span className="text-primary font-semibold text-sm uppercase tracking-widest">
+            Why Choose Us
+          </span>
+          <h1 className="section-title mt-2">
+            The Shirdi Car Rental <span className="gradient-text">Difference</span>
+          </h1>
+          <p className="section-subtitle">
+            Safe journeys, transparent fares and drivers you can trust - built
+            over years of serving pilgrims and travellers.
+          </p>
+        </div>
+      </main>
+      <WhyChooseUs />
+      <FeaturedPackages />
+      <Footer />
+    </>
+  );
+}
