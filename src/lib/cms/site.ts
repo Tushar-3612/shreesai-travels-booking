@@ -14,7 +14,7 @@ import type {
   GalleryItem,
   SiteSettings,
 } from "@/admin/types";
-import { readCollection, writeCollection } from "./store";
+import { readCollection, writeCollection, type CollectionName } from "./store";
 
 export interface SiteStats {
   avgRating: number;
@@ -117,10 +117,15 @@ export function toTravelPackage(
   };
 }
 
-export function getSiteSnapshot(): SiteData {
-  const settings = readCollection<SiteSettings>("settings");
-  const adminPackages = readCollection<AdminPackage[]>("packages");
-  const allReviews = readCollection<AdminReview[]>("reviews");
+export async function getSiteSnapshot(): Promise<SiteData> {
+  const [settings, adminPackages, allReviews, vehicles, gallery] = await Promise.all([
+    readCollection<SiteSettings>("settings" as CollectionName),
+    readCollection<AdminPackage[]>("packages" as CollectionName),
+    readCollection<AdminReview[]>("reviews" as CollectionName),
+    readCollection<AdminVehicle[]>("vehicles" as CollectionName),
+    readCollection<GalleryItem[]>("gallery" as CollectionName),
+  ]);
+
   const approved = allReviews
     .filter((r) => r.status === "approved")
     .sort(
@@ -130,11 +135,6 @@ export function getSiteSnapshot(): SiteData {
   const packages = adminPackages
     .filter((p) => p.status === "active")
     .map((p) => toTravelPackage(p, approved));
-
-  const vehicles = readCollection<AdminVehicle[]>("vehicles").filter(
-    (v) => v.status === "available"
-  );
-  const gallery = readCollection<GalleryItem[]>("gallery");
 
   const reviewCount = approved.length;
   const avgRating = reviewCount
@@ -150,20 +150,20 @@ export function getSiteSnapshot(): SiteData {
     settings,
     categories,
     packages,
-    vehicles,
+    vehicles: vehicles.filter((v) => v.status === "available"),
     reviews: approved,
     gallery,
     stats: { avgRating, reviewCount },
   };
 }
 
-export function addPublicReview(input: {
+export async function addPublicReview(input: {
   name: string;
   route: string;
   rating: number;
   text: string;
-}): AdminReview {
-  const reviews = readCollection<AdminReview[]>("reviews");
+}): Promise<AdminReview> {
+  const reviews = await readCollection<AdminReview[]>("reviews" as CollectionName);
   const review: AdminReview = {
     id: `user-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`,
     name: input.name.trim().slice(0, 80),
@@ -175,6 +175,6 @@ export function addPublicReview(input: {
     featured: false,
     source: "user",
   };
-  writeCollection("reviews", [review, ...reviews]);
+  await writeCollection("reviews" as CollectionName, [review, ...reviews]);
   return review;
 }

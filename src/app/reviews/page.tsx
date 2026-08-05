@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function ReviewsIndexPage() {
-  const data = getSiteSnapshot();
+export default async function ReviewsIndexPage() {
+  const data = await getSiteSnapshot();
 
   const schema = {
     "@context": "https://schema.org",

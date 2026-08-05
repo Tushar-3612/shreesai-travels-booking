@@ -30,7 +30,7 @@ export default async function BookingSuccessPage({ searchParams }: Props) {
     );
   }
 
-  const bookings = readCollection<AdminBooking[]>("bookings");
+  const bookings = await readCollection<AdminBooking[]>("bookings");
   const booking = bookings.find((b) => b.id === bookingId);
 
   if (!booking) {

@@ -58,7 +58,7 @@ export async function login(
   email: string,
   password: string
 ): Promise<{ ok: boolean; error?: string }> {
-  const profile = verifyPassword(email, password);
+  const profile = await verifyPassword(email, password);
   if (!profile) return { ok: false, error: "Invalid email or password" };
   await issueSession(profile);
   return { ok: true };
@@ -76,7 +76,7 @@ export async function changePassword(
   if (newPassword.length < 6) {
     return { ok: false, error: "New password must be at least 6 characters" };
   }
-  saveCredentials({ passwordHash: hashPassword(newPassword) });
+  await saveCredentials({ passwordHash: hashPassword(newPassword) });
   return { ok: true };
 }
 
@@ -86,7 +86,7 @@ export async function updateProfile(patch: {
 }): Promise<{ ok: boolean; profile?: AdminProfileRecord; error?: string }> {
   const profile = await requireAdminApi();
   if (!profile) return { ok: false, error: "Unauthorized" };
-  const next = saveCredentials({
+  const next = await saveCredentials({
     name: patch.name !== undefined ? patch.name.trim() || profile.name : undefined,
     photoUrl: patch.photoUrl !== undefined ? patch.photoUrl : undefined,
   });

@@ -1,66 +1,70 @@
-import fs from "node:fs";
+import "server-only";
+
 import path from "node:path";
+
+import { connectDB, MediaModel } from "@/lib/models";
+import { uploadToCloudinary, deleteFromCloudinary } from "@/lib/cloudinary";
 import { ADMIN_CONFIG } from "../../config";
 import type { MediaItem } from "../../types";
 
-const MEDIA_DIR = path.join(process.cwd(), "public", "admin", "media");
-
-function ensureDir() {
-  if (!fs.existsSync(MEDIA_DIR)) fs.mkdirSync(MEDIA_DIR, { recursive: true });
+async function getModel() {
+  await connectDB();
+  return MediaModel;
 }
 
 export async function saveUpload(
   file: File
 ): Promise<{ url: string; error?: string }> {
-  const ext = path.extname(file.name).toLowerCase();
+  const ext = path.extname(file.name || "").toLowerCase();
   if (!ADMIN_CONFIG.uploads.allowedExtensions.includes(ext)) {
     return { url: "", error: `File type "${ext || "unknown"}" is not allowed` };
   }
   if (file.size > ADMIN_CONFIG.uploads.maxSizeBytes) {
     return { url: "", error: "File exceeds the 5 MB size limit" };
   }
-  ensureDir();
-  const name = `admin_${Date.now()}_${Math.random().toString(36).slice(2, 8)}${ext}`;
-  const buffer = Buffer.from(await file.arrayBuffer());
-  fs.writeFileSync(path.join(MEDIA_DIR, name), buffer);
-  return { url: `/admin/media/${name}` };
+
+  const result = await uploadToCloudinary(file);
+  if (result.error || !result.url) {
+    return { url: "", error: result.error || "Upload failed" };
+  }
+
+  const Model = await getModel();
+  await Model.create({
+    name: `${result.publicId}${ext}`,
+    url: result.url,
+    size: file.size,
+    uploadedAt: new Date().toISOString(),
+    publicId: result.publicId,
+  });
+
+  return { url: result.url };
 }
 
-export function listMedia(): MediaItem[] {
-  ensureDir();
-  return fs
-    .readdirSync(MEDIA_DIR)
-    .filter((name) =>
-      ADMIN_CONFIG.uploads.allowedExtensions.includes(path.extname(name).toLowerCase())
-    )
-    .map((name) => {
-      const stat = fs.statSync(path.join(MEDIA_DIR, name));
-      return {
-        name,
-        url: `/admin/media/${name}`,
-        size: stat.size,
-        uploadedAt: stat.mtime.toISOString(),
-      };
-    })
-    .sort(
-      (a, b) =>
-        new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
-    );
+export async function listMedia(): Promise<MediaItem[]> {
+  const Model = await getModel();
+  const docs = await Model.find().sort({ uploadedAt: -1 }).lean().exec();
+  return docs.map((doc) => ({
+    name: doc.name,
+    url: doc.url,
+    size: doc.size,
+    uploadedAt: doc.uploadedAt,
+  }));
 }
 
-export function deleteMediaFile(
+export async function deleteMediaFile(
   fileName: string
-): { ok: boolean; error?: string } {
-  if (!/^[a-zA-Z0-9._-]+$/.test(fileName)) {
+): Promise<{ ok: boolean; error?: string }> {
+  if (!/^[a-zA-Z0-9._/-]+$/.test(fileName)) {
     return { ok: false, error: "Invalid file name" };
   }
-  const full = path.join(MEDIA_DIR, fileName);
-  if (!full.startsWith(MEDIA_DIR)) {
-    return { ok: false, error: "Invalid file path" };
-  }
-  if (!fs.existsSync(full)) {
+  const Model = await getModel();
+  const doc = await Model.findOne({ name: fileName }).lean().exec();
+  if (!doc) {
     return { ok: false, error: "File not found" };
   }
-  fs.rmSync(full);
+  if (doc.publicId) {
+    await deleteFromCloudinary(doc.publicId);
+  }
+  await Model.deleteOne({ _id: doc._id }).exec();
   return { ok: true };
 }

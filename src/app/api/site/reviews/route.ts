@@ -28,7 +28,7 @@ export async function POST(request: Request) {
       );
     }
 
-    addPublicReview({ name, route: body.route ?? "", rating, text });
+    await addPublicReview({ name, route: body.route ?? "", rating, text });
 
     return NextResponse.json(
       { ok: true, message: "Review submitted for approval" },

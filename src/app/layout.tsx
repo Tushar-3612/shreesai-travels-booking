@@ -21,7 +21,7 @@ const FALLBACK_DESCRIPTION =
 export async function generateMetadata(): Promise<Metadata> {
   let settings;
   try {
-    settings = getSiteSnapshot().settings;
+    settings = (await getSiteSnapshot()).settings;
   } catch {
     settings = null;
   }

@@ -5,10 +5,10 @@ export const dynamic = "force-dynamic";
 
 const BASE_URL = "https://www.shirdicarrental.com";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let packages: { slug: string }[] = [];
   try {
-    packages = getSiteSnapshot().packages;
+    packages = (await getSiteSnapshot()).packages;
   } catch {
     packages = [];
   }

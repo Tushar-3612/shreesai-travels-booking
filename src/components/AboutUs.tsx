@@ -55,9 +55,9 @@ export default function AboutUs({ preview = false }: { preview?: boolean }) {
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 rounded-[24px] blur-2xl" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={about?.image}
-                alt="About Shirdi Car Rental"
+        <img
+          src={about?.image || "/images/xuv.jpeg"}
+          alt="About Shirdi Car Rental"
                 className="relative rounded-[24px] shadow-xl w-full object-cover aspect-[4/3]"
                 loading="lazy"
               />

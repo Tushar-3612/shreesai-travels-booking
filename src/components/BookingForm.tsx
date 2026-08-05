@@ -336,8 +336,8 @@ export default function BookingForm() {
                     className="input-field"
                   >
                     <option value="">Select a vehicle</option>
-                    {vehicles.map((v) => (
-                      <option key={v} value={v}>{v}</option>
+                    {vehicles.map((v, i) => (
+                      <option key={`${v}-${i}`} value={v}>{v}</option>
                     ))}
                   </select>
                 </div>

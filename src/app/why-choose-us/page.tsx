@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function WhyChooseUsPage() {
-  const data = getSiteSnapshot();
+export default async function WhyChooseUsPage() {
+  const data = await getSiteSnapshot();
 
   const schema = {
     "@context": "https://schema.org",

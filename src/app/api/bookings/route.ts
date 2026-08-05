@@ -26,7 +26,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const bookingId = searchParams.get("bookingId");
 
-  const bookings = readCollection<AdminBooking[]>("bookings");
+  const bookings = await readCollection<AdminBooking[]>("bookings");
 
   if (bookingId) {
     const booking = bookings.find((b) => b.id === bookingId);
@@ -169,9 +169,9 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     };
 
-    const list = readCollection<AdminBooking[]>("bookings");
-    list.unshift(booking);
-    writeCollection("bookings", list);
+  const list = await readCollection<AdminBooking[]>("bookings");
+  list.unshift(booking);
+  await writeCollection("bookings", list);
 
     return NextResponse.json(
       { ok: true, booking },

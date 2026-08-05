@@ -7,7 +7,8 @@ export async function GET() {
   if (!profile) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
-  return NextResponse.json({ ok: true, items: listMedia() });
+  const items = await listMedia();
+  return NextResponse.json({ ok: true, items });
 }
 
 export async function DELETE(request: Request) {
@@ -17,7 +18,7 @@ export async function DELETE(request: Request) {
   }
   const { searchParams } = new URL(request.url);
   const file = searchParams.get("file") ?? "";
-  const result = deleteMediaFile(file);
+  const result = await deleteMediaFile(file);
   if (!result.ok) {
     return NextResponse.json(result, { status: 400 });
   }

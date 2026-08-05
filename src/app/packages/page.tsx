@@ -36,7 +36,7 @@ interface Props {
 
 export default async function PackagesIndex({ searchParams }: Props) {
   const params = await searchParams;
-  const data = getSiteSnapshot();
+  const data = await getSiteSnapshot();
 
   const category =
     typeof params.category === "string" &&

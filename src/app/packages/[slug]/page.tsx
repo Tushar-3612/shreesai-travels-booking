@@ -12,7 +12,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const data = getSiteSnapshot();
+  const data = await getSiteSnapshot();
   const pkg = data.packages.find((p) => p.slug === slug);
   if (!pkg) {
     return {
@@ -53,7 +53,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PackagePage({ params }: Props) {
   const { slug } = await params;
-  const data = getSiteSnapshot();
+  const data = await getSiteSnapshot();
   const pkg = data.packages.find((p) => p.slug === slug);
   if (!pkg) notFound();
 

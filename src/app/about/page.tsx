@@ -24,8 +24,8 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-export default function AboutPage() {
-  const data = getSiteSnapshot();
+export default async function AboutPage() {
+  const data = await getSiteSnapshot();
   const settings = data.settings;
 
   const schema = {

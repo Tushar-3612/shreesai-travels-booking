@@ -175,8 +175,7 @@ export interface Vehicle {
 export const VEHICLES: Vehicle[] = [
   {
     name: "XUV XL6",
-    image:
-      "public/images/xuv.jpeg",
+    image: "/images/xuv.jpeg",
     seats:6 ,
     fuel: "Diesel",
     ac: "Fully AC",

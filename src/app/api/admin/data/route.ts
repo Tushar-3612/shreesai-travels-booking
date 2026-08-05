@@ -1,5 +1,3 @@
-import fs from "node:fs";
-import path from "node:path";
 import { NextResponse } from "next/server";
 import { requireAdminApi } from "@/admin/lib/server/auth";
 import {
@@ -7,6 +5,7 @@ import {
   readCollection,
   resetCollection,
   writeCollection,
+  type CollectionName,
 } from "@/lib/cms/store";
 import type { SiteSettings } from "@/admin/types";
 
@@ -20,16 +19,14 @@ type Mutation =
   | { action: "save"; item: Record<string, unknown> }
   | { action: "reset" };
 
-function applyCollectionMutation<T>(
-  collection: string,
+async function applyCollectionMutation<T>(
+  collection: CollectionName,
   mutation: Mutation
-): T {
-  const current = readCollection<unknown[] | Record<string, unknown>>(
-    collection as never
-  );
+): Promise<T> {
+  const current = await readCollection<unknown[] | Record<string, unknown>>(collection);
 
   if (mutation.action === "reset") {
-    return resetCollection(collection as never) as T;
+    return (await resetCollection(collection)) as T;
   }
 
   let next: unknown;
@@ -46,11 +43,11 @@ function applyCollectionMutation<T>(
       default:
         next = current;
     }
-    writeCollection(collection as never, next);
+    await writeCollection(collection, next);
     return next as T;
   }
 
-  const list = [...current];
+  const list = [...current] as Record<string, unknown>[];
 
   switch (mutation.action) {
     case "add": {
@@ -84,20 +81,8 @@ function applyCollectionMutation<T>(
       next = current;
   }
 
-  writeCollection(collection as never, next);
+  await writeCollection(collection, next);
   return next as T;
-}
-
-function syncFavicon(favicon: string) {
-  if (!favicon.startsWith("/admin/media/")) return;
-  const fileName = path.basename(favicon);
-  const source = path.join(process.cwd(), "public", "admin", "media", fileName);
-  if (!fs.existsSync(source)) return;
-  try {
-    fs.copyFileSync(source, path.join(process.cwd(), "public", "favicon.ico"));
-  } catch {
-    // favicon sync is best-effort
-  }
 }
 
 export async function GET(request: Request) {
@@ -109,7 +94,8 @@ export async function GET(request: Request) {
   if (!isCollectionName(collection)) {
     return NextResponse.json({ ok: false, error: "Unknown collection" }, { status: 400 });
   }
-  return NextResponse.json(readCollection(collection), {
+  const data = await readCollection(collection);
+  return NextResponse.json(data, {
     headers: { "Cache-Control": "no-store" },
   });
 }
@@ -136,12 +122,9 @@ export async function POST(request: Request) {
     const mutation = { action: body.action, id: body.id, item: body.item, items: body.items } as Mutation;
 
     if (collection === "settings") {
-      const settings = applyCollectionMutation<SiteSettings>(collection, mutation);
-      if (mutation.action === "save" && settings.favicon) {
-        syncFavicon(settings.favicon);
-      }
+      await applyCollectionMutation<SiteSettings>(collection, mutation);
     } else {
-      applyCollectionMutation<unknown[]>(collection, mutation);
+      await applyCollectionMutation<unknown[]>(collection, mutation);
     }
 
     return NextResponse.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });
