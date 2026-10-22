@@ -3,6 +3,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookingForm from "@/components/BookingForm";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Book a Taxi from Shirdi | Quick & Secure Online Booking",
   description:

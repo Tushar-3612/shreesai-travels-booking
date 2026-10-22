@@ -8,10 +8,12 @@ import {
   type TravelPackage,
 } from "@/data/packages";
 import type {
+  AdminDestination,
   AdminPackage,
   AdminReview,
   AdminVehicle,
   GalleryItem,
+  PricingConfig,
   SiteSettings,
 } from "@/admin/types";
 import { readCollection, writeCollection, type CollectionName } from "./store";
@@ -28,6 +30,8 @@ export interface SiteData {
   vehicles: AdminVehicle[];
   reviews: AdminReview[];
   gallery: GalleryItem[];
+  destinations: AdminDestination[];
+  pricing: PricingConfig;
   stats: SiteStats;
 }
 
@@ -118,13 +122,16 @@ export function toTravelPackage(
 }
 
 export async function getSiteSnapshot(): Promise<SiteData> {
-  const [settings, adminPackages, allReviews, vehicles, gallery] = await Promise.all([
-    readCollection<SiteSettings>("settings" as CollectionName),
-    readCollection<AdminPackage[]>("packages" as CollectionName),
-    readCollection<AdminReview[]>("reviews" as CollectionName),
-    readCollection<AdminVehicle[]>("vehicles" as CollectionName),
-    readCollection<GalleryItem[]>("gallery" as CollectionName),
-  ]);
+  const [settings, adminPackages, allReviews, vehicles, gallery, destinations, pricing] =
+    await Promise.all([
+      readCollection<SiteSettings>("settings" as CollectionName),
+      readCollection<AdminPackage[]>("packages" as CollectionName),
+      readCollection<AdminReview[]>("reviews" as CollectionName),
+      readCollection<AdminVehicle[]>("vehicles" as CollectionName),
+      readCollection<GalleryItem[]>("gallery" as CollectionName),
+      readCollection<AdminDestination[]>("destinations" as CollectionName),
+      readCollection<PricingConfig>("pricing" as CollectionName),
+    ]);
 
   const approved = allReviews
     .filter((r) => r.status === "approved")
@@ -153,6 +160,8 @@ export async function getSiteSnapshot(): Promise<SiteData> {
     vehicles: vehicles.filter((v) => v.status === "available"),
     reviews: approved,
     gallery,
+    destinations: destinations.filter((d) => d.status === "active"),
+    pricing,
     stats: { avgRating, reviewCount },
   };
 }

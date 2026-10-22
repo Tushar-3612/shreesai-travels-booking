@@ -38,9 +38,9 @@ ADMIN_PASSWORD=your-strong-password
 ADMIN_JWT_SECRET=a-long-random-secret
 ```
 
-The admin credentials are stored hashed (SHA-256) in `admin-data/credentials.json`
-which is created automatically on first use and is git-ignored. You can change
-the password from **Profile → Change Password**.
+The admin credentials are stored hashed (SHA-256) in MongoDB and are
+created automatically on first use. You can change the password from
+**Profile → Change Password**.
 
 ## Authentication
 
@@ -61,17 +61,17 @@ src/admin/
 ├── styles/admin.css        # admin component styles
 ├── lib/
 │   ├── jwt.ts              # HS256 sign/verify (Web Crypto)
-│   ├── storage.ts          # localStorage helpers
+│   ├── storage.ts          # utility helpers (uid generation)
 │   ├── seed.ts             # initial data (mirrors the live site)
 │   ├── db.ts               # useCollection / useSettings data hooks
 │   ├── constants.ts        # nav, icons, categories
 │   ├── auth.ts             # client-side auth API calls
 │   ├── api.ts              # upload & media API calls
 │   ├── toast.ts            # toast notifications
-│   └── server/             # server-only code (fs, cookies, JWT)
+│   └── server/             # server-only code (cookies, JWT, DB)
 │       ├── auth.ts         # login / session / guards
-│       ├── credentials.ts  # credentials.json read/write
-│       └── media.ts        # file upload / list / delete
+│       ├── credentials.ts  # credentials stored in MongoDB
+│       └── media.ts        # Cloudinary upload / list / delete
 └── components/
     ├── AdminShell.tsx      # sidebar + topbar layout
     ├── Sidebar.tsx / Topbar.tsx
@@ -107,24 +107,25 @@ Only where actually required (auth + file uploads):
 | `/api/admin/upload`        | POST     | Image upload (max 5 MB)    |
 | `/api/admin/media`         | GET/DELETE | List / delete media files |
 
-Uploads are saved to `public/admin/media/` and served statically.
+Uploads are stored in Cloudinary and metadata is persisted in MongoDB.
 
 ## Data & storage
 
-All admin content is stored **server-side** as JSON files in the git-ignored
-`admin-data/` directory:
+All admin content is stored **server-side** in MongoDB Atlas:
 
-```
-admin-data/
-├── credentials.json   # hashed admin credentials
-├── bookings.json      # booking management
-├── packages.json      # taxi packages
-├── vehicles.json      # fleet
-├── services.json      # services
-├── reviews.json       # review moderation (incl. website submissions)
-├── gallery.json       # gallery images
-└── settings.json      # hero, about, why-choose-us, contact, social, SEO
-```
+- **Credentials** — admin login credentials (hashed passwords) in the
+  `credentials` collection.
+- **Bookings** — booking management in the `bookings` collection.
+- **Packages** — taxi packages in the `packages` collection.
+- **Vehicles** — fleet management in the `vehicles` collection.
+- **Services** — services in the `services` collection.
+- **Reviews** — review moderation (incl. website submissions) in the
+  `reviews` collection.
+- **Gallery** — gallery images in the `gallery` collection.
+- **Settings** — hero, about, why-choose-us, contact, social, SEO in the
+  `settings` collection.
+- **Media** — uploaded image metadata (URL, public ID, size) in the
+  `media` collection; actual image files are stored in Cloudinary.
 
 Files are seeded automatically on first read from the existing site content
 (`src/data/packages.ts`, `src/data/reviews.ts`) by `src/lib/cms/store.ts`.
@@ -138,24 +139,18 @@ the frontend after refresh.
 - **Everything is synchronized**: Hero slides, packages, vehicles, reviews,
   gallery, about, why-choose-us, trust statistics, most booked routes,
   contact details, social links, business name, logo, favicon, footer and
-  SEO settings all flow from `admin-data/*.json` → `GET /api/site` → the
-  frontend components (via `SiteProvider` in `src/lib/site.ts`).
+  SEO settings all flow from MongoDB → `GET /api/site` → the
+  frontend components (via `SiteProvider` in `src/lib/site.tsx`).
 - **Reviews**: the website feedback form posts to `POST /api/site/reviews`,
-  which creates a `pending` review in `admin-data/reviews.json`. Approving /
+  which creates a `pending` review in MongoDB. Approving /
   rejecting it in the admin Reviews page publishes or hides it on the
   website immediately.
-- **Favicon**: when Settings → Branding saves a favicon hosted under
-  `/admin/media/`, it is copied to `public/favicon.ico` so it works on every
-  page.
 - **No hardcoded content**: user-facing components no longer import content
   from `src/data/*`; they consume the site API. The data files remain only
   as the seed source for the store.
 
 ## Notes
 
-- Requires a Node runtime with file-system access (local `next dev` /
-  `next start`). File uploads and the credentials file will not work on
-  read-only hosting (e.g. Vercel free tier) — on such hosts, back
-  `src/admin/lib/server/` with a database/object-storage service.
+- Requires a MongoDB Atlas cluster and a Cloudinary account.
 - Change the default password and `ADMIN_JWT_SECRET` before going live.
-- Uploaded media lives in `public/admin/` and is git-ignored.
+- Uploaded media is stored in Cloudinary and is not committed to git.

@@ -7,4 +7,6 @@ export { GalleryModel } from "./Gallery";
 export { MediaModel } from "./Media";
 export { SettingModel } from "./Setting";
 export { CredentialModel } from "./Credential";
+export { DestinationModel } from "./Destination";
+export { PricingModel } from "./Pricing";
 export { connectDB } from "../mongodb";

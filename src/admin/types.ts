@@ -145,6 +145,7 @@ export interface SiteSettings {
   mostBookedRoutes: RouteItem[];
   phone: string;
   phoneDisplay: string;
+  secondaryPhone?: string;
   whatsapp: string;
   email: string;
   address: string;
@@ -165,4 +166,68 @@ export interface AdminProfile {
   name: string;
   email: string;
   photoUrl: string;
+}
+
+export interface AdminDestination {
+  id: string;
+  name: string;
+  city: string;
+  state: string;
+  image: string;
+  imageAlt: string;
+  description: string;
+  distance: number;
+  popular: boolean;
+  status: "active" | "inactive";
+}
+
+export interface VehiclePricing {
+  id: string;
+  vehicleId: string;
+  name: string;
+  type: string;
+  capacity: number;
+  baseFare: number;
+  perKm: number;
+  perDay: number;
+  extraKmRate: number;
+  driverCharge: number;
+  status: "active" | "inactive";
+}
+
+export interface DestinationPricing {
+  id: string;
+  name: string;
+  from: string;
+  distance: number;
+  oneWay: number;
+  roundTrip: number;
+  perDay: number;
+  additionalCharge: number;
+  status: "active" | "inactive";
+}
+
+export interface ExtraCharges {
+  driverAllowance: number;
+  nightCharge: number;
+  toll: number;
+  parking: number;
+  extraKm: number;
+  currency: string;
+  minFare: number;
+}
+
+export interface CalculatorSettings {
+  enabled: boolean;
+  currency: string;
+  minFare: number;
+  defaultVehicle: string;
+  defaultTripType: "One Way" | "Round Trip";
+}
+
+export interface PricingConfig {
+  vehiclePricing: VehiclePricing[];
+  destinationPricing: DestinationPricing[];
+  extraCharges: ExtraCharges;
+  calculator: CalculatorSettings;
 }

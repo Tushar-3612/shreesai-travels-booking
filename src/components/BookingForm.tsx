@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { FiCalendar, FiPhone, FiMapPin, FiClock, FiUsers, FiSend, FiCheck } from "react-icons/fi";
+import { FiCalendar, FiPhone, FiMapPin, FiClock, FiUsers, FiSend, FiCheck, FiInfo } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa6";
 import { useSiteData, whatsappHref, bookMessage } from "@/lib/site";
 import { toast } from "@/lib/toast";
@@ -49,20 +50,47 @@ const INITIAL_FORM = {
 
 type BookingFormValues = typeof INITIAL_FORM;
 
+function parsePrefill(raw: string | null): BookingFormValues | null {
+  if (!raw) return null;
+  try {
+    const data = JSON.parse(decodeURIComponent(raw)) as Record<string, unknown>;
+    return {
+      customerName: typeof data.customerName === "string" ? data.customerName : "",
+      phone: typeof data.phone === "string" ? data.phone : "",
+      pickup: typeof data.pickup === "string" ? data.pickup : "",
+      drop: typeof data.drop === "string" ? data.drop : "",
+      pickupAddress: typeof data.pickupAddress === "string" ? data.pickupAddress : "",
+      date: typeof data.date === "string" ? data.date : "",
+      time: typeof data.time === "string" ? data.time : "",
+      vehicle: typeof data.vehicle === "string" ? data.vehicle : "",
+      passengers:
+        typeof data.passengers === "number" && data.passengers >= 1
+          ? data.passengers
+          : typeof data.passengers === "string" && Number(data.passengers) >= 1
+            ? Number(data.passengers)
+            : 1,
+      journeyType: data.journeyType === "Round Trip" ? "Round Trip" : "One Way",
+      message: typeof data.message === "string" ? data.message : "",
+    };
+  } catch {
+    return null;
+  }
+}
+
 function buildBookingMessage(form: BookingFormValues) {
   const lines = [
-    "🚖 *New Booking Request*",
+    "*New Booking Request*",
     "",
-    `👤 Name: ${form.customerName || "N/A"}`,
-    `📞 Phone: ${form.phone || "N/A"}`,
-    `📍 Pickup: ${form.pickup || "N/A"}`,
-    `📍 Drop: ${form.drop || "N/A"}`,
-    `🏠 Full Address: ${form.pickupAddress || "N/A"}`,
-    `📅 Journey Date: ${form.date || "N/A"}`,
-    `🕒 Journey Time: ${form.time || "N/A"}`,
-    `🚗 Vehicle: ${form.vehicle || "N/A"}`,
-    `👥 Passengers: ${form.passengers || 1}`,
-    `📝 Special Note: ${form.message || "N/A"}`,
+    `Name: ${form.customerName || "N/A"}`,
+    `Phone: ${form.phone || "N/A"}`,
+    `Pickup: ${form.pickup || "N/A"}`,
+    `Drop: ${form.drop || "N/A"}`,
+    `Full Address: ${form.pickupAddress || "N/A"}`,
+    `Journey Date: ${form.date || "N/A"}`,
+    `Journey Time: ${form.time || "N/A"}`,
+    `Vehicle: ${form.vehicle || "N/A"}`,
+    `Passengers: ${form.passengers || 1}`,
+    `Special Note: ${form.message || "N/A"}`,
     "",
     "Please confirm my booking.",
     "",
@@ -78,7 +106,15 @@ export default function BookingForm() {
   const vehicles =
     site?.vehicles?.map((v) => v.name) ?? VEHICLES.map((v) => v.name);
 
-  const [form, setForm] = useState<BookingFormValues>({ ...INITIAL_FORM });
+  const searchParams = useSearchParams();
+  const prefill = useMemo(
+    () => parsePrefill(searchParams.get("prefill")),
+    [searchParams]
+  );
+  const [form, setForm] = useState<BookingFormValues>(
+    () => prefill ?? { ...INITIAL_FORM }
+  );
+  const prefillNote = prefill?.message ?? "";
   const [submitting, setSubmitting] = useState(false);
   const [dateError, setDateError] = useState("");
 
@@ -178,6 +214,16 @@ export default function BookingForm() {
                 Fill in the form below and we&apos;ll confirm your cab right away.
               </p>
             </div>
+
+            {prefillNote && (
+              <div className="flex items-start gap-3 bg-primary/5 border border-primary/15 px-8 py-4">
+                <FiInfo className="text-primary shrink-0 mt-0.5" size={18} />
+                <p className="text-sm font-semibold text-secondary">
+                  Your trip details were pre-filled from the cost calculator.
+                  <span className="block text-primary font-bold mt-0.5">{prefillNote}</span>
+                </p>
+              </div>
+            )}
 
             <div className="p-8 sm:p-10">
               <div className="grid sm:grid-cols-2 gap-y-6 gap-x-6">

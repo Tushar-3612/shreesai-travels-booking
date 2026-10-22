@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #2563EB;
-  --color-primary-dark: #1D4ED8;
-  --color-primary-light: #60A5FA;
+  --color-primary: #ea580c;
+  --color-primary-dark: #c2410c;
+  --color-primary-light: #fb923c;
   --color-secondary: #0F172A;
-  --color-accent: #F59E0B;
-  --color-accent-light: #FBBF24;
+  --color-accent: #f97316;
+  --color-accent-light: #fdba74;
   --color-success: #10B981;
   --color-bg: #FFFFFF;
-  --color-bg-alt: #F8FAFC;
+  --color-bg-alt: #FFFBF7;
   --color-text: #0F172A;
   --color-text-muted: #64748B;
   --color-border: #E2E8F0;
@@ -23,12 +23,15 @@
 
 html {
   scroll-behavior: smooth;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
+  max-width: 100vw;
   overflow-x: hidden;
 }
 
@@ -51,11 +54,11 @@ body {
 }
 .card-hover:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px -12px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 20px 40px -12px rgba(234, 88, 12, 0.25);
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #2563EB, #1D4ED8);
+  background: linear-gradient(135deg, #ea580c, #c2410c);
   color: white;
   font-weight: 600;
   padding: 14px 32px;
@@ -63,7 +66,7 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -72,7 +75,7 @@ body {
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.5);
+  box-shadow: 0 8px 25px rgba(234, 88, 12, 0.5);
 }
 .btn-primary:active {
   transform: translateY(0);
@@ -94,14 +97,14 @@ body {
   font-size: 1rem;
 }
 .btn-secondary:hover {
-  border-color: #2563EB;
-  color: #2563EB;
+  border-color: #ea580c;
+  color: #ea580c;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 8px 25px rgba(234, 88, 12, 0.1);
 }
 
 .btn-accent {
-  background: linear-gradient(135deg, #F59E0B, #D97706);
+  background: linear-gradient(135deg, #f97316, #ea580c);
   color: white;
   font-weight: 600;
   padding: 14px 32px;
@@ -109,7 +112,7 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+  box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -118,7 +121,7 @@ body {
 }
 .btn-accent:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5);
 }
 
 .section-padding {
@@ -152,14 +155,14 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #2563EB, #60A5FA);
+  background: linear-gradient(135deg, #ea580c, #f97316);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .gradient-gold {
-  background: linear-gradient(135deg, #F59E0B, #FBBF24);
+  background: linear-gradient(135deg, #f97316, #fdba74);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -180,8 +183,8 @@ body {
   color: #0F172A;
 }
 .input-field:focus {
-  border-color: #2563EB;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  border-color: #ea580c;
+  box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.15);
 }
 .input-field::placeholder {
   color: #94A3B8;
@@ -220,4 +223,50 @@ textarea.input-field {
   .marquee-track {
     animation: none;
   }
+}
+
+/* Custom Tour Cost Fare Estimator Range Slider */
+.custom-fare-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 9999px;
+  outline: none;
+  cursor: pointer;
+  background-color: #334155;
+  transition: all 0.2s ease;
+}
+
+.custom-fare-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ea580c;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.45);
+  cursor: grab;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.custom-fare-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 3px 12px rgba(234, 88, 12, 0.65);
+}
+
+.custom-fare-slider::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.05);
+}
+
+.custom-fare-slider::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #ea580c;
+  border: 3px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.45);
+  cursor: grab;
 }

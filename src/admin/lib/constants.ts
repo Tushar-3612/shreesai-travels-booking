@@ -64,6 +64,8 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "Gallery", href: "/admin/gallery", icon: FiImage, section: "CONTENT" },
   { label: "Reviews", href: "/admin/reviews", icon: FiStar, section: "CONTENT" },
   { label: "Media Library", href: "/admin/media", icon: FiFolder, section: "CONTENT" },
+  { label: "Destinations", href: "/admin/destinations", icon: FiMapPin, section: "CONTENT" },
+  { label: "Pricing", href: "/admin/pricing", icon: FiDollarSign, section: "SYSTEM" },
   { label: "Website Settings", href: "/admin/settings", icon: FiSettings, section: "SYSTEM" },
   { label: "Profile", href: "/admin/profile", icon: FiUser, section: "SYSTEM" },
 ];

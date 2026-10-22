@@ -62,7 +62,8 @@ export default async function PackagePage({ params }: Props) {
     "@type": "Product",
     name: `${pkg.name} Taxi Package - ${data.settings.businessName}`,
     description: pkg.seoDescription,
-    image: [pkg.image, ...pkg.gallery.map((g) => g.src)],
+    image:
+     [pkg.image, ...pkg.gallery.map((g) => g.src)],
     brand: { "@type": "Brand", name: data.settings.businessName },
     sku: `SCR-${pkg.slug.toUpperCase()}`,
     offers: pkg.priceNum > 0

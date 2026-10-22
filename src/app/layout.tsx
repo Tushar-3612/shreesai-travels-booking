@@ -69,7 +69,7 @@ export default function RootLayout({
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="min-h-screen flex flex-col antialiased">
+      <body className="min-h-screen flex flex-col antialiased pb-16 md:pb-0">
         <SiteProvider>
           <PageTransition>{children}</PageTransition>
           <Toaster />

@@ -9,9 +9,11 @@ import {
 } from "react";
 import type { TravelPackage } from "@/data/packages";
 import type {
+  AdminDestination,
   AdminReview,
   AdminVehicle,
   GalleryItem,
+  PricingConfig,
   SiteSettings,
 } from "@/admin/types";
 
@@ -27,6 +29,8 @@ export interface SiteData {
   vehicles: AdminVehicle[];
   reviews: AdminReview[];
   gallery: GalleryItem[];
+  destinations: AdminDestination[];
+  pricing: PricingConfig;
   stats: SiteStats;
 }
 

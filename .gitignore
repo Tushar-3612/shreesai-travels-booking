@@ -40,9 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# admin panel runtime data & uploads
-/admin-data/
-/public/admin/
-
 dev-error.log
 dev-output.log

@@ -4,14 +4,16 @@ import { useCallback, useEffect, useState } from "react";
 import { uid } from "./storage";
 import {
   seedBookings,
+  seedDestinations,
   seedGallery,
   seedPackages,
+  seedPricing,
   seedReviews,
   seedServices,
   seedSettings,
   seedVehicles,
 } from "./seed";
-import type { SiteSettings } from "../types";
+import type { PricingConfig, SiteSettings } from "../types";
 
 export const DB_KEYS = {
   bookings: "bookings",
@@ -21,6 +23,7 @@ export const DB_KEYS = {
   reviews: "reviews",
   gallery: "gallery",
   settings: "settings",
+  destinations: "destinations",
 } as const;
 
 async function apiPost(body: unknown) {
@@ -132,6 +135,10 @@ export function useGalleryItems() {
   return useCollection(DB_KEYS.gallery, seedGallery);
 }
 
+export function useDestinations() {
+  return useCollection(DB_KEYS.destinations, seedDestinations);
+}
+
 export function useSettings() {
   const [settings, setSettings] = useState<SiteSettings>(() => seedSettings());
   const [isLoading, setIsLoading] = useState(true);
@@ -187,4 +194,49 @@ export function useSettings() {
   }, []);
 
   return { settings, update, save, reset, isLoading };
+}
+
+export function usePricing() {
+  const [pricing, setPricing] = useState<PricingConfig>(() => seedPricing());
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/admin/data?collection=pricing`, {
+          cache: "no-store",
+        });
+        if (!res.ok) throw new Error("load failed");
+        const data = (await res.json()) as unknown;
+        if (!cancelled && typeof data === "object" && data !== null) {
+          setPricing(data as PricingConfig);
+        }
+      } catch {
+        /* keep seeded fallback */
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const update = useCallback((patch: Partial<PricingConfig>) => {
+    setPricing((prev) => ({ ...prev, ...patch }));
+  }, []);
+
+  const setPricingState = useCallback((next: PricingConfig) => {
+    setPricing(next);
+  }, []);
+
+  const save = useCallback((next: PricingConfig) => {
+    setPricing(next);
+    void apiPost({ collection: "pricing", action: "save", item: next }).catch(() => {
+      /* offline / transient */
+    });
+  }, []);
+
+  return { pricing, update, setPricing: setPricingState, save, isLoading };
 }

@@ -9,12 +9,16 @@ import {
   ReviewModel,
   GalleryModel,
   SettingModel,
+  DestinationModel,
+  PricingModel,
 } from "@/lib/models";
 import type { Model, Document } from "mongoose";
 import {
   seedBookings,
+  seedDestinations,
   seedGallery,
   seedPackages,
+  seedPricing,
   seedReviews,
   seedServices,
   seedSettings,
@@ -29,6 +33,8 @@ export const COLLECTIONS = [
   "reviews",
   "gallery",
   "settings",
+  "destinations",
+  "pricing",
 ] as const;
 
 export type CollectionName = (typeof COLLECTIONS)[number];
@@ -41,6 +47,8 @@ const SEEDERS: Record<CollectionName, () => unknown> = {
   reviews: seedReviews,
   gallery: seedGallery,
   settings: seedSettings,
+  destinations: seedDestinations,
+  pricing: seedPricing,
 };
 
 const MODEL_MAP: Record<CollectionName, Model<Document>> = {
@@ -51,6 +59,8 @@ const MODEL_MAP: Record<CollectionName, Model<Document>> = {
   reviews: ReviewModel as unknown as Model<Document>,
   gallery: GalleryModel as unknown as Model<Document>,
   settings: SettingModel as unknown as Model<Document>,
+  destinations: DestinationModel as unknown as Model<Document>,
+  pricing: PricingModel as unknown as Model<Document>,
 };
 
 async function getModel(name: CollectionName): Promise<Model<Document>> {
@@ -58,7 +68,7 @@ async function getModel(name: CollectionName): Promise<Model<Document>> {
   return MODEL_MAP[name];
 }
 
-function stripMongooseFields(doc: Record<string, unknown>): Record<string, unknown> {
+function stripMongooseFields(doc: unknown): Record<string, unknown> {
   const obj = JSON.parse(JSON.stringify(doc));
   delete obj._id;
   delete obj.__v;
@@ -66,26 +76,40 @@ function stripMongooseFields(doc: Record<string, unknown>): Record<string, unkno
 }
 
 export async function readCollection<T>(name: CollectionName): Promise<T> {
-  const Model = await getModel(name);
+  try {
+    const Model = await getModel(name);
 
-  if (name === "settings") {
-    const doc = await Model.findOne().lean().exec();
-    if (doc) {
-      return stripMongooseFields(doc as Record<string, unknown>) as T;
+    if (name === "settings" || name === "pricing") {
+      const doc = await Model.findOne().lean().exec();
+      if (doc) {
+        return stripMongooseFields(doc) as T;
+      }
+      const seeded =
+        name === "settings" ? seedSettings() : seedPricing();
+      try {
+        await Model.create(seeded as unknown as Record<string, unknown>);
+      } catch {
+        // ignore seed insertion write error during read
+      }
+      return seeded as T;
     }
-    const seeded = seedSettings();
-    await Model.create(seeded);
-    return seeded as T;
-  }
 
-  const docs = await Model.find().lean().exec();
-  if (!docs.length) {
-    const seeded = SEEDERS[name]();
-    await Model.insertMany(seeded);
-    return seeded as T;
+    const docs = await Model.find().lean().exec();
+    if (!docs.length) {
+      const seeded = SEEDERS[name]();
+      try {
+        await Model.insertMany(seeded);
+      } catch {
+        // ignore seed insertion write error during read
+      }
+      return seeded as T;
+    }
+    const cleaned = docs.map((doc) => stripMongooseFields(doc));
+    return cleaned as T;
+  } catch {
+    const fallback = SEEDERS[name]();
+    return fallback as T;
   }
-  const cleaned = docs.map((doc: Record<string, unknown>) => stripMongooseFields(doc));
-  return cleaned as T;
 }
 
 export async function writeCollection(
@@ -94,9 +118,9 @@ export async function writeCollection(
 ): Promise<void> {
   const Model = await getModel(name);
 
-  if (name === "settings") {
+  if (name === "settings" || name === "pricing") {
     await Model.deleteMany({}).exec();
-    await Model.create(value);
+    await Model.create(value as Record<string, unknown>);
     return;
   }
 
@@ -113,7 +137,7 @@ export async function resetCollection(
   const seeded = SEEDERS[name]();
   if (name === "settings") {
     await Model.deleteMany({}).exec();
-    await Model.create(seeded);
+    await Model.create(seeded as Record<string, unknown>);
   } else {
     await Model.deleteMany({}).exec();
     await Model.insertMany(seeded);
