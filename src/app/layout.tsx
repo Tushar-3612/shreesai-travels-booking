@@ -65,11 +65,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable}`}>
+    <html lang="en" className={`${poppins.variable}`} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body className="min-h-screen flex flex-col antialiased pb-16 md:pb-0">
+      <body className="min-h-screen flex flex-col antialiased pb-16 md:pb-0" suppressHydrationWarning>
         <SiteProvider>
           <PageTransition>{children}</PageTransition>
           <Toaster />
