@@ -56,13 +56,13 @@ export interface TravelPackage {
 }
 
 export const CONTACT = {
-  phone: "+917498462597",
-  phoneDisplay: "+91 7498 462 597",
-  whatsapp: "917498462597",
-  email: "info@shirdicarrental.com",
+  phone: "+919225396800",
+  phoneDisplay: "+91 92253 96800",
+  whatsapp: "919225396800",
+  email: "saivaishnavitourstravels@gmail.com",
   address: "Near Sai Temple, Shirdi, Maharashtra 423109",
   whatsappMessage: (text: string) =>
-    `https://wa.me/917498462597?text=${encodeURIComponent(text)}`,
+    `https://wa.me/919225396800?text=${encodeURIComponent(text)}`,
 };
 
 export const IMG = {

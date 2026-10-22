@@ -84,11 +84,11 @@ export default function Navbar() {
   const hillRef = useRef<HTMLDivElement>(null);
 
   const settings = site?.settings;
-  const businessName = settings?.businessName || "OM SAI TOURS & TRAVELS";
-  const primaryPhone = settings?.phone || "8459209595";
-  const secondaryPhone = settings?.secondaryPhone || "8804729595";
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours & Travels";
+  const primaryPhone = settings?.phone || "9225396800";
+  const secondaryPhone = settings?.secondaryPhone || "";
   const whatsappNumber =
-    settings?.whatsapp?.replace(/[^0-9]/g, "") || "918459209595";
+    settings?.whatsapp?.replace(/[^0-9]/g, "") || "919225396800";
 
   const bookHref = whatsappHref(
     whatsappNumber,

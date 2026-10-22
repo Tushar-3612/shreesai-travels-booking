@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       "Book your cab online in 30 seconds with transparent, all-inclusive fares. AC cars for Shirdi darshan, airport & outstation trips.",
     type: "website",
     locale: "en_IN",
-    siteName: "Shirdi Car Rental",
+    siteName: "Sai Vaishnavi Tours and Travels",
   },
   robots: { index: true, follow: true },
 };

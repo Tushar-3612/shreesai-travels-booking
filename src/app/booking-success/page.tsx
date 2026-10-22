@@ -6,7 +6,7 @@ import { readCollection } from "@/lib/cms/store";
 import type { AdminBooking } from "@/admin/types";
 
 export const metadata: Metadata = {
-  title: "Booking Confirmation | Shirdi Car Rental",
+  title: "Booking Confirmation | Sai Vaishnavi Tours and Travels",
   description:
     "View and manage your taxi booking confirmation. Check pickup, drop, journey details, and contact us.",
   robots: { index: false, follow: true },

@@ -34,7 +34,7 @@ export default function Hero({
 
   const slides = site?.settings.heroSlides ?? [];
   const settings = site?.settings;
-  const businessName = settings?.businessName || "Shree Sai Travels";
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
 
   useEffect(() => {
     if (slides.length < 2) return;
@@ -59,12 +59,12 @@ export default function Hero({
     : ["", ""];
 
   const bookHref = whatsappHref(
-    settings?.whatsapp || "918459209595",
-    bookMessage(businessName, "Hello Shree Sai Travels, I would like to book a taxi. Please share details.")
+    settings?.whatsapp || "919225396800",
+    bookMessage(businessName, "Hello Sai Vaishnavi Tours and Travels, I would like to book a taxi. Please share details.")
   );
 
-  const primaryPhone = settings?.phone || "8459209595";
-  const secondaryPhone = settings?.secondaryPhone || "8804729595";
+  const primaryPhone = settings?.phone || "9225396800";
+  const secondaryPhone = settings?.secondaryPhone || "";
 
   return (
     <section

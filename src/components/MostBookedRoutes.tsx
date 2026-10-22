@@ -4,28 +4,21 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { FiMapPin, FiArrowRight } from "react-icons/fi";
 import { FaWhatsapp } from "react-icons/fa";
-import { bookMessage, useSiteData, whatsappHref } from "@/lib/site";
+import { type TravelPackage } from "@/data/packages";
+import { packageBookingMessage, useSiteData, whatsappHref } from "@/lib/site";
 
 export default function MostBookedRoutes() {
   const site = useSiteData();
   const settings = site?.settings;
-  const businessName = settings?.businessName || "Shirdi Car Rental";
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
 
   const routes = (settings?.mostBookedRoutes ?? [])
     .map((item) => {
       const pkg = site?.packages.find((p) => p.slug === item.slug);
       if (!pkg) return null;
-      return {
-        slug: pkg.slug,
-        route: item.route || pkg.route,
-        price: item.price || pkg.price,
-        image: pkg.image,
-        imageAlt: pkg.imageAlt,
-        category: pkg.category,
-        priceNum: pkg.priceNum,
-      };
+      return pkg;
     })
-    .filter((r): r is NonNullable<typeof r> => r !== null);
+    .filter((r): r is TravelPackage => r !== null);
 
   const track = [...routes, ...routes];
 
@@ -63,11 +56,8 @@ export default function MostBookedRoutes() {
           {track.map((pkg, i) => {
             const isCustom = pkg.priceNum === 0;
             const bookHref = whatsappHref(
-              settings?.whatsapp || "",
-              bookMessage(
-                businessName,
-                `I would like to book the *${pkg.route}* route. Please share availability.`
-              )
+              settings?.whatsapp || "919225396800",
+              packageBookingMessage(businessName, pkg)
             );
             return (
               <div

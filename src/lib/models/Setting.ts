@@ -6,7 +6,7 @@ export interface SettingDoc extends SiteSettings, Document {}
 
 const SettingSchema = new Schema<SettingDoc>(
   {
-    businessName: { type: String, default: "Shirdi Car Rental" },
+    businessName: { type: String, default: "Sai Vaishnavi Tours and Travels" },
     tagline: { type: String, default: "" },
     logo: { type: String, default: "" },
     favicon: { type: String, default: "/favicon.ico" },
@@ -15,9 +15,9 @@ const SettingSchema = new Schema<SettingDoc>(
     about: { type: Schema.Types.Mixed, default: {} },
     whyChooseUs: [{ type: Schema.Types.Mixed, default: [] }],
     mostBookedRoutes: [{ type: Schema.Types.Mixed, default: [] }],
-    phone: { type: String, default: "" },
-    phoneDisplay: { type: String, default: "" },
-    whatsapp: { type: String, default: "" },
+    phone: { type: String, default: "+919225396800" },
+    phoneDisplay: { type: String, default: "+91 92253 96800" },
+    whatsapp: { type: String, default: "919225396800" },
     email: { type: String, default: "" },
     address: { type: String, default: "" },
     googleMapsLink: { type: String, default: "" },

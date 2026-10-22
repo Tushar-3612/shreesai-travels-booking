@@ -9,16 +9,16 @@ import { getSiteSnapshot } from "@/lib/cms/site";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "About Us | Shirdi Car Rental & Taxi Service",
+  title: "About Us | Sai Vaishnavi Tours and Travels",
   description:
-    "Learn about Shirdi Car Rental - 8+ years of trusted taxi service in Shirdi, a fleet of 50+ well-maintained cars and thousands of happy pilgrims and travellers.",
+    "Learn about Sai Vaishnavi Tours and Travels - trusted taxi service in Shirdi, premium fleet of well-maintained cars and thousands of happy pilgrims and travellers.",
   openGraph: {
-    title: "About Us | Shirdi Car Rental",
+    title: "About Us | Sai Vaishnavi Tours and Travels",
     description:
-      "The story behind Shirdi Car Rental - a trusted name for safe, comfortable and affordable taxi service in Shirdi.",
+      "The story behind Sai Vaishnavi Tours and Travels - a trusted name for safe, comfortable and affordable taxi and tour service in Shirdi.",
     type: "website",
     locale: "en_IN",
-    siteName: "Shirdi Car Rental",
+    siteName: "Sai Vaishnavi Tours and Travels",
   },
   alternates: { canonical: "/about" },
   robots: { index: true, follow: true },

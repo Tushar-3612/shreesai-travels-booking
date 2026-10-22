@@ -57,7 +57,7 @@ export default function AboutUs({ preview = false }: { preview?: boolean }) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={about?.image || "/images/xuv.jpeg"}
-          alt="About Shirdi Car Rental"
+          alt="About Sai Vaishnavi Tours and Travels"
                 className="relative rounded-[24px] shadow-xl w-full object-cover aspect-[4/3]"
                 loading="lazy"
               />

@@ -62,7 +62,8 @@ export function useSiteData(): SiteData | null {
 }
 
 export function whatsappHref(number: string, text: string) {
-  const clean = (number ?? "").replace(/\D/g, "");
+  const digits = (number ?? "").replace(/\D/g, "");
+  const clean = digits.length >= 10 ? digits : "919225396800";
   return `https://wa.me/${clean}?text=${encodeURIComponent(text)}`;
 }
 
@@ -89,6 +90,51 @@ export function splitBusinessName(name: string): { line1: string; line2: string 
 }
 
 export function bookMessage(businessName: string, detail: string) {
-  const name = businessName || "Shirdi Car Rental";
+  const name = businessName || "Sai Vaishnavi Tours and Travels";
   return `Hi ${name}! ${detail}`;
+}
+
+export function packageBookingMessage(
+  businessName: string,
+  pkg: TravelPackage
+): string {
+  const agency = businessName || "Sai Vaishnavi Tours and Travels";
+  const lines: string[] = [
+    `*Namaste ${agency}!* 🙏`,
+    `I want to book the following tour package:`,
+    ``,
+    `📍 *Package Name:* ${pkg.name}`,
+    `🏷️ *Category:* ${pkg.category}`,
+    `🛣️ *Route:* ${pkg.route}`,
+    `📏 *Distance:* ${pkg.distance}`,
+    `⏱️ *Duration:* ${pkg.duration}`,
+    `💰 *Fare:* One Way: ${pkg.price} | Round Trip: ${pkg.roundTrip}`,
+  ];
+
+  if (pkg.description) {
+    lines.push(``, `📝 *Overview:*`, pkg.description);
+  }
+
+  if (pkg.highlights && pkg.highlights.length > 0) {
+    lines.push(``, `✨ *Trip Highlights:*`);
+    pkg.highlights.forEach((h, i) => lines.push(`${i + 1}. ${h}`));
+  }
+
+  if (pkg.included && pkg.included.length > 0) {
+    lines.push(``, `✅ *What's Included:*`);
+    pkg.included.forEach((inc) => lines.push(`• ${inc}`));
+  }
+
+  if (pkg.notIncluded && pkg.notIncluded.length > 0) {
+    lines.push(``, `❌ *What's Not Included:*`);
+    pkg.notIncluded.forEach((notInc) => lines.push(`• ${notInc}`));
+  }
+
+  lines.push(
+    ``,
+    `🚗 *Available Cars:* Dzire / Ertiga / Innova Crysta / Traveller`,
+    `Please share cab availability, driver details, and final booking confirmation.`
+  );
+
+  return lines.join("\n");
 }

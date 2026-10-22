@@ -9,16 +9,16 @@ import { getSiteSnapshot } from "@/lib/cms/site";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Why Choose Us | Shirdi Car Rental & Taxi Service",
+  title: "Why Choose Us | Sai Vaishnavi Tours and Travels",
   description:
-    "Discover why travellers trust Shirdi Car Rental - professional drivers, 24x7 service, clean cars, affordable fares, safe journeys and instant booking.",
+    "Discover why travellers trust Sai Vaishnavi Tours and Travels - professional drivers, 24x7 service, clean cars, affordable fares, safe journeys and instant booking.",
   openGraph: {
-    title: "Why Choose Us | Shirdi Car Rental",
+    title: "Why Choose Us | Sai Vaishnavi Tours and Travels",
     description:
-      "Professional drivers, clean cars, transparent fares and 24x7 support - the reasons travellers pick Shirdi Car Rental.",
+      "Professional drivers, clean cars, transparent fares and 24x7 support - the reasons travellers pick Sai Vaishnavi Tours and Travels.",
     type: "website",
     locale: "en_IN",
-    siteName: "Shirdi Car Rental",
+    siteName: "Sai Vaishnavi Tours and Travels",
   },
   alternates: { canonical: "/why-choose-us" },
   robots: { index: true, follow: true },
@@ -50,7 +50,7 @@ export default async function WhyChooseUsPage() {
             Why Choose Us
           </span>
           <h1 className="section-title mt-2">
-            The Shirdi Car Rental <span className="gradient-text">Difference</span>
+            The Sai Vaishnavi <span className="gradient-text">Difference</span>
           </h1>
           <p className="section-subtitle">
             Safe journeys, transparent fares and drivers you can trust - built

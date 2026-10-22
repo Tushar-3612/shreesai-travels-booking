@@ -1,6 +1,6 @@
 export const ADMIN_CONFIG = {
   brand: {
-    name: "Shirdi Car Rental",
+    name: "Sai Vaishnavi Tours and Travels",
     tagline: "Admin Panel",
   },
   jwt: {

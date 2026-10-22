@@ -50,7 +50,7 @@ export default function LoginForm() {
               </div>
               <div>
                 <p className="font-extrabold text-lg leading-tight">
-                  Shirdi Car Rental
+                  Sai Vaishnavi Tours and Travels
                 </p>
                 <p className="text-xs text-blue-300 font-semibold">Admin Panel</p>
               </div>
@@ -89,7 +89,7 @@ export default function LoginForm() {
             </div>
             <div>
               <p className="font-extrabold text-lg leading-tight text-slate-900">
-                Shirdi Car Rental
+                Sai Vaishnavi Tours and Travels
               </p>
               <p className="text-xs text-blue-600 font-semibold">Admin Panel</p>
             </div>

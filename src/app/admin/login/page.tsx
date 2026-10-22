@@ -5,7 +5,7 @@ import LoginForm from "@/admin/components/auth/LoginForm";
 import "@/admin/styles/admin.css";
 
 export const metadata: Metadata = {
-  title: "Admin Login | Shirdi Car Rental",
+  title: "Admin Login | Sai Vaishnavi Tours and Travels",
   robots: "noindex, nofollow",
 };
 

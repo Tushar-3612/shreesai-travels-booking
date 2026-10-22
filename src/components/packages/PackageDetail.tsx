@@ -17,7 +17,7 @@ import {
 import { FaWhatsapp } from "react-icons/fa";
 import { BsCarFront } from "react-icons/bs";
 import { type TravelPackage } from "@/data/packages";
-import { bookMessage, getRelated, useSiteData, whatsappHref } from "@/lib/site";
+import { bookMessage, getRelated, packageBookingMessage, useSiteData, whatsappHref } from "@/lib/site";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PackageCard from "@/components/packages/PackageCard";
@@ -32,13 +32,10 @@ interface PackageDetailProps {
 export default function PackageDetail({ pkg, allPackages }: PackageDetailProps) {
   const site = useSiteData();
   const settings = site?.settings;
-  const businessName = settings?.businessName || "Shirdi Car Rental";
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
   const isCustom = pkg.priceNum === 0;
-  const bookText = bookMessage(
-    businessName,
-    `I want to book the *${pkg.name}* package (${pkg.price} one way, ${pkg.roundTrip} round trip). Please share availability.`
-  );
-  const bookHref = whatsappHref(settings?.whatsapp || "", bookText);
+  const bookText = packageBookingMessage(businessName, pkg);
+  const bookHref = whatsappHref(settings?.whatsapp || "919225396800", bookText);
 
   const rating = site && site.stats.reviewCount > 0 ? site.stats.avgRating : 4.9;
   const ratingText = site && site.stats.reviewCount > 0
@@ -369,11 +366,11 @@ export default function PackageDetail({ pkg, allPackages }: PackageDetailProps) 
                       WhatsApp Us
                     </a>
                     <a
-                      href={`tel:${settings?.phone || ""}`}
+                      href={`tel:${settings?.phone || "+919225396800"}`}
                       className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-2xl border-2 border-border text-secondary font-bold hover:border-primary hover:text-primary transition-all duration-300"
                     >
                       <FiPhone size={18} />
-                      Call {settings?.phoneDisplay}
+                      Call {settings?.phoneDisplay || "+91 92253 96800"}
                     </a>
 
                     <div className="mt-5 space-y-2.5">

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
       "Select your destination and get a fixed, transparent quote. 12+ verified taxi packages with fuel, tolls and professional drivers included.",
     type: "website",
     locale: "en_IN",
-    siteName: "Shirdi Car Rental",
+    siteName: "Sai Vaishnavi Tours and Travels",
   },
   twitter: {
     card: "summary_large_image",

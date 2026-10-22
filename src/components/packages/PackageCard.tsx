@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FiMapPin, FiClock, FiCheck, FiArrowRight, FiStar } from "react-icons/fi";
 import { BsCarFront } from "react-icons/bs";
 import { type TravelPackage } from "@/data/packages";
-import { bookMessage, useSiteData, whatsappHref } from "@/lib/site";
+import { packageBookingMessage, useSiteData, whatsappHref } from "@/lib/site";
 
 interface PackageCardProps {
   pkg: TravelPackage;
@@ -14,14 +14,11 @@ interface PackageCardProps {
 export default function PackageCard({ pkg, index }: PackageCardProps) {
   const site = useSiteData();
   const settings = site?.settings;
-  const businessName = settings?.businessName || "Shirdi Car Rental";
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
   const isCustom = pkg.priceNum === 0;
   const bookHref = whatsappHref(
-    settings?.whatsapp || "",
-    bookMessage(
-      businessName,
-      `I would like to book the *${pkg.name}* package (${pkg.price} one way, ${pkg.roundTrip} round trip).`
-    )
+    settings?.whatsapp || "919225396800",
+    packageBookingMessage(businessName, pkg)
   );
 
   return (

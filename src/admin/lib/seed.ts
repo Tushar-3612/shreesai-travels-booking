@@ -613,14 +613,14 @@ export function seedGallery(): GalleryItem[] {
 
 export function seedSettings(): SiteSettings {
   return {
-    businessName: "Shirdi Car Rental",
-    tagline: "Trusted Car Rental & Taxi Service in Shirdi",
+    businessName: "Sai Vaishnavi Tours and Travels",
+    tagline: "Premier Car Rental & Tour Packages in Shirdi",
     logo: "",
     favicon: "/favicon.ico",
     heroSlides: [
       {
-        heading: "Shree Sai Tours And Travels",
-        gold: "Shree Sai",
+        heading: "Sai Vaishnavi Tours and Travels",
+        gold: "Sai Vaishnavi",
         subtitle:
           "Premium chauffeur-driven cars for Shirdi darshan, airport transfers and outstation journeys across Maharashtra.",
         image: IMG.heroCar,
@@ -669,7 +669,7 @@ export function seedSettings(): SiteSettings {
       vision:
         "To become the most trusted and preferred car rental and taxi service provider in Shirdi, known for our professionalism and customer-first approach.",
       description:
-        "Founded with a passion for serving pilgrims and travelers, Shirdi Car Rental has grown from a small fleet to a trusted name in Shirdi's transportation sector. Every vehicle is maintained to the highest standards, and every driver is trained to provide courteous and safe service.",
+        "Founded with a passion for serving pilgrims and travelers, Sai Vaishnavi Tours and Travels has grown from a small fleet to a trusted name in Shirdi's transportation and package tours sector. Every vehicle is maintained to the highest standards, and every driver is trained to provide courteous and safe service.",
       image:
         "https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=1936&auto=format&fit=crop",
     },
@@ -732,18 +732,18 @@ export function seedSettings(): SiteSettings {
     facebook: "",
     youtube: "",
     workingHours: "Open 24x7",
-    footerCopyright: "Shirdi Car Rental. All rights reserved.",
+    footerCopyright: "Sai Vaishnavi Tours and Travels. All rights reserved.",
     companyDescription:
-      "Your trusted car rental and taxi service in Shirdi. Book comfortable, affordable, and safe rides for all your travel needs.",
+      "Your trusted tour and taxi partner in Shirdi. Book comfortable, affordable, and safe rides for pilgrimage darshans, hill stations, and outstation trips.",
     primaryColor: "#2563EB",
     secondaryColor: "#0F172A",
     accentColor: "#F59E0B",
     seo: {
-      title: "Shirdi Car Rental | Reliable Car & Taxi Booking in Shirdi",
+      title: "Sai Vaishnavi Tours and Travels | Reliable Car & Taxi Booking in Shirdi",
       description:
-        "Book comfortable, affordable, and safe car rentals and taxi services in Shirdi. Local travel, airport transfers, outstation trips. 24/7 service, professional drivers.",
+        "Book comfortable, affordable, and safe car rentals and taxi services in Shirdi with Sai Vaishnavi Tours and Travels. Local travel, airport transfers, outstation trips. 24/7 service, professional drivers.",
       keywords:
-        "car rental Shirdi, taxi service Shirdi, Shirdi airport taxi, car hire Shirdi, outstation taxi Shirdi, Shirdi local sightseeing",
+        "car rental Shirdi, taxi service Shirdi, Sai Vaishnavi Tours and Travels, Shirdi airport taxi, car hire Shirdi, outstation taxi Shirdi, Shirdi local sightseeing",
       ogImage: "",
       gaId: "",
       gscVerification: "",

@@ -23,7 +23,7 @@ const cardVariants = {
 export default function OurVehicles() {
   const site = useSiteData();
   const settings = site?.settings;
-  const businessName = settings?.businessName || "Shree Sai Travels";
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
   const vehicles = site?.vehicles ?? [];
 
   const getLuggageCapacity = (seats: number, name: string) => {

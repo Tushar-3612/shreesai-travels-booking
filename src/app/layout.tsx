@@ -14,9 +14,9 @@ const poppins = Poppins({
 
 export const dynamic = "force-dynamic";
 
-const FALLBACK_TITLE = "Shirdi Car Rental | Reliable Car & Taxi Booking in Shirdi";
+const FALLBACK_TITLE = "Sai Vaishnavi Tours and Travels | Reliable Car & Taxi Booking in Shirdi";
 const FALLBACK_DESCRIPTION =
-  "Book comfortable, affordable, and safe car rentals and taxi services in Shirdi. Local travel, airport transfers, outstation trips. 24/7 service, professional drivers.";
+  "Book comfortable, affordable, and safe car rentals and taxi services in Shirdi with Sai Vaishnavi Tours and Travels. Local travel, airport transfers, outstation trips. 24/7 service, professional drivers.";
 
 export async function generateMetadata(): Promise<Metadata> {
   let settings;
@@ -26,7 +26,7 @@ export async function generateMetadata(): Promise<Metadata> {
     settings = null;
   }
   const seo = settings?.seo;
-  const businessName = settings?.businessName || "Shirdi Car Rental";
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
   const title = seo?.title || FALLBACK_TITLE;
   const description = seo?.description || FALLBACK_DESCRIPTION;
 

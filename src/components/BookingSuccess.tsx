@@ -44,11 +44,11 @@ export default function BookingSuccess({ booking }: { booking: AdminBooking }) {
   const router = useRouter();
   const site = useSiteData();
   const settings = site?.settings;
-  const businessName = settings?.businessName || "Shirdi Car Rental";
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
   const phoneDisplay = settings?.phoneDisplay || booking.phone;
 
   const waText = `Hi ${businessName}! I just booked a taxi (Booking ID: ${booking.id}) from ${booking.pickup} to ${booking.drop} on ${booking.date} at ${booking.time}. Please confirm.`;
-  const waHref = whatsappHref(settings?.whatsapp || "", waText);
+  const waHref = whatsappHref(settings?.whatsapp || "919225396800", waText);
 
   const handleNewBooking = () => {
     router.push("/book");

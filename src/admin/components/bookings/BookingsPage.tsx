@@ -222,7 +222,7 @@ export default function BookingsPage() {
                       <a
                         className="adm-icon-btn"
                         title="WhatsApp customer"
-                        href={whatsappLink(b.phone, `Hi ${b.customerName}! Your booking with Shirdi Car Rental (${b.id}) - ${b.pickup} to ${b.drop} on ${b.date} at ${b.time}.`)}
+                        href={whatsappLink(b.phone, `Hi ${b.customerName}! Your booking with Sai Vaishnavi Tours and Travels (${b.id}) - ${b.pickup} to ${b.drop} on ${b.date} at ${b.time}.`)}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -308,7 +308,7 @@ export default function BookingsPage() {
                 className="adm-btn adm-btn-primary"
                 href={whatsappLink(
                   detail.phone,
-                  `Hi ${detail.customerName}! Your booking with Shirdi Car Rental (${detail.id}) is confirmed.`
+                  `Hi ${detail.customerName}! Your booking with Sai Vaishnavi Tours and Travels (${detail.id}) is confirmed.`
                 )}
                 target="_blank"
                 rel="noopener noreferrer"

@@ -173,9 +173,9 @@ export function TourCostCalculatorCard({
     }
   };
 
-  const businessName = settings?.businessName || "Shree Sai Travels";
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours & Travels";
   const whatsappNumber =
-    settings?.whatsapp?.replace(/[^0-9]/g, "") || "918459209595";
+    settings?.whatsapp?.replace(/[^0-9]/g, "") || "919225396800";
 
   const handleBookNow = () => {
     const lines = [

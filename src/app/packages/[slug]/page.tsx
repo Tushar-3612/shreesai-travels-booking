@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const pkg = data.packages.find((p) => p.slug === slug);
   if (!pkg) {
     return {
-      title: "Package Not Found | Shirdi Car Rental",
+      title: "Package Not Found | Sai Vaishnavi Tours and Travels",
       description:
         "The taxi package you are looking for does not exist. Explore all taxi packages from Shirdi.",
     };

@@ -213,21 +213,21 @@ export default function SettingsPage() {
                 <TextInput
                   value={settings.phone}
                   onChange={(e) => patch({ phone: e.target.value })}
-                  placeholder="+917498462597"
+                  placeholder="+919225396800"
                 />
               </Field>
               <Field label="Phone (Display Format)">
                 <TextInput
                   value={settings.phoneDisplay}
                   onChange={(e) => patch({ phoneDisplay: e.target.value })}
-                  placeholder="+91 7498 462 597"
+                  placeholder="+91 92253 96800"
                 />
               </Field>
               <Field label="WhatsApp Number">
                 <TextInput
                   value={settings.whatsapp}
                   onChange={(e) => patch({ whatsapp: e.target.value })}
-                  placeholder="917498462597"
+                  placeholder="919225396800"
                 />
               </Field>
               <Field label="Email">

@@ -31,7 +31,7 @@ export default function Footer() {
   const site = useSiteData();
   const settings = site?.settings;
 
-  const businessName = settings?.businessName || "Shirdi Car Rental";
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
   const logo = settings?.logo || "";
   const logoText = splitBusinessName(businessName);
   const services = (site?.packages ?? []).slice(0, 6);
@@ -170,20 +170,20 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href={`tel:${settings?.phone || ""}`}
+                  href={`tel:${settings?.phone || "+919225396800"}`}
                   className="flex items-center gap-3 text-sm text-white/60 hover:text-primary transition-colors duration-300"
                 >
                   <FiPhone className="text-accent shrink-0" size={16} />
-                  {settings?.phoneDisplay}
+                  {settings?.phoneDisplay || "+91 92253 96800"}
                 </a>
               </li>
               <li>
                 <a
-                  href={`mailto:${settings?.email || ""}`}
+                  href={`mailto:${settings?.email || "saivaishnavitourstravels@gmail.com"}`}
                   className="flex items-center gap-3 text-sm text-white/60 hover:text-primary transition-colors duration-300"
                 >
                   <FiMail className="text-success shrink-0" size={16} />
-                  {settings?.email}
+                  {settings?.email || "saivaishnavitourstravels@gmail.com"}
                 </a>
               </li>
             </ul>

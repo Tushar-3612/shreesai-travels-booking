@@ -102,7 +102,7 @@ function buildBookingMessage(form: BookingFormValues) {
 export default function BookingForm() {
   const site = useSiteData();
   const settings = site?.settings;
-  const businessName = settings?.businessName || "Shirdi Car Rental";
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
   const vehicles =
     site?.vehicles?.map((v) => v.name) ?? VEHICLES.map((v) => v.name);
 
