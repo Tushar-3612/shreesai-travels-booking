@@ -44,9 +44,13 @@ export default function LoginForm() {
           <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full bg-blue-600/30 blur-3xl" />
           <div className="absolute -bottom-24 -left-16 w-64 h-64 rounded-full bg-blue-500/20 blur-3xl" />
           <div className="relative">
-            <div className="flex items-center gap-3 mb-10">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-lg shadow-blue-600/40">
-                <FaCarSide size={20} />
+            <div className="flex items-center gap-3.5 mb-10">
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-white p-0.5 shadow-lg shadow-blue-600/40 border border-white/20 flex items-center justify-center shrink-0">
+                <img
+                  src="/images/logo.jpeg"
+                  alt="Sai Vaishnavi Tours and Travels"
+                  className="w-full h-full object-contain rounded-full"
+                />
               </div>
               <div>
                 <p className="font-extrabold text-lg leading-tight">
@@ -83,9 +87,13 @@ export default function LoginForm() {
         </div>
 
         <div className="p-8 sm:p-12">
-          <div className="lg:hidden flex items-center gap-3 mb-10">
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-lg shadow-blue-600/30 text-white">
-              <FaCarSide size={20} />
+          <div className="lg:hidden flex items-center gap-3.5 mb-10">
+            <div className="w-12 h-12 rounded-full overflow-hidden bg-white p-0.5 shadow-lg shadow-slate-300/60 border border-slate-200 flex items-center justify-center shrink-0">
+              <img
+                src="/images/logo.jpeg"
+                alt="Sai Vaishnavi Tours and Travels"
+                className="w-full h-full object-contain rounded-full"
+              />
             </div>
             <div>
               <p className="font-extrabold text-lg leading-tight text-slate-900">

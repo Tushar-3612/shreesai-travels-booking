@@ -17,7 +17,7 @@ export default function PackageCard({ pkg, index }: PackageCardProps) {
   const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
   const isCustom = pkg.priceNum === 0;
   const bookHref = whatsappHref(
-    settings?.whatsapp || "919225396800",
+    settings?.whatsapp || "917498462597",
     packageBookingMessage(businessName, pkg)
   );
 

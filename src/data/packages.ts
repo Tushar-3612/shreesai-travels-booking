@@ -58,11 +58,11 @@ export interface TravelPackage {
 export const CONTACT = {
   phone: "+919225396800",
   phoneDisplay: "+91 92253 96800",
-  whatsapp: "919225396800",
-  email: "saivaishnavitourstravels@gmail.com",
+  whatsapp: "917498462597",
+  email: "autadevishal74@gmail.com",
   address: "Near Sai Temple, Shirdi, Maharashtra 423109",
   whatsappMessage: (text: string) =>
-    `https://wa.me/919225396800?text=${encodeURIComponent(text)}`,
+    `https://wa.me/917498462597?text=${encodeURIComponent(text)}`,
 };
 
 export const IMG = {
@@ -72,14 +72,11 @@ export const IMG = {
   mumbaiGateway:
     "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?q=80&w=1600&auto=format&fit=crop",
   pune: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=1600&auto=format&fit=crop",
-  nashik:
-    "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=1600&auto=format&fit=crop",
-  aurangabad:
-    "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=1600&auto=format&fit=crop",
+  nashik: "/images/nashik_img.avif",
+  aurangabad: "/images/sambhaji_nagar.jpg",
   trimbakeshwar:
     "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?q=80&w=1600&auto=format&fit=crop",
-  shaniShingnapur:
-    "https://images.unsplash.com/photo-1567157577867-05ccb1388e66?q=80&w=1600&auto=format&fit=crop",
+  shaniShingnapur: "/images/shignapur.webp",
   bhimashankar:
     "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600&auto=format&fit=crop",
   ajanta:
@@ -102,30 +99,24 @@ export const IMG = {
     "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=1600&auto=format&fit=crop",
   bhandardaraLake:
     "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1600&auto=format&fit=crop",
-  malshejGhat:
-    "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1600&auto=format&fit=crop",
-  malshejWaterfall:
-    "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1600&auto=format&fit=crop",
-  shivneriFort:
-    "https://images.unsplash.com/photo-1599661046289-e31897846e41?q=80&w=1600&auto=format&fit=crop",
-  sinhagadFort:
-    "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=1600&auto=format&fit=crop",
+  malshejGhat: "/images/malshej.webp",
+  malshejWaterfall: "/images/malshej.webp",
+  shivneriFort: "/images/shivneri.jpg",
+  sinhagadFort: "/images/Sinhagad-Fort.avif",
   khadakwasla:
     "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop",
-  lonavala:
-    "https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1600&auto=format&fit=crop",
+  lonavala: "/images/lonavla.jpg",
   mahabaleshwar:
-    "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1600&auto=format&fit=crop",
+    "/images/panchgani-mahabaleshwar-maharashtra-2-attr-hero.jpg",
   vennaLake:
     "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1600&auto=format&fit=crop",
-  igatpuri:
-    "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1600&auto=format&fit=crop",
+  igatpuri: "/images/Igatpuri.jpg",
   lavasa:
     "https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1600&auto=format&fit=crop",
-  ahmednagarFort:
-    "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=1600&auto=format&fit=crop",
-  kolhapur:
-    "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=1600&auto=format&fit=crop",
+  ahmednagarFort: "/images/ahilyanagr.jpg",
+  kolhapur: "/images/mahalaxmi-temple-kolhapur-1-attr-nearby.jpg",
+  pandharpur: "/images/pandharpur.webp",
+  vani: "/images/vani.jpg",
 
   // Transit & Fleet
   heroCar:
@@ -212,8 +203,7 @@ export interface Vehicle {
 export const VEHICLES: Vehicle[] = [
   {
     name: "Maruti Swift Dzire",
-    image:
-      "https://imgd.aeplcdn.com/0x0/n/cw/ec/44701/swift-dzire-exterior-right-front-three-quarter-2.jpeg?isig=0&q=80",
+    image: "/images/dzire.jpg",
     seats: 4,
     fuel: "Petrol / CNG",
     ac: "Fully AC",
@@ -222,8 +212,7 @@ export const VEHICLES: Vehicle[] = [
   },
   {
     name: "Maruti Ertiga",
-    image:
-      "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=1200&auto=format&fit=crop",
+    image: "/images/xuv.jpeg",
     seats: 6,
     fuel: "Petrol",
     ac: "Dual AC Vents",
@@ -232,8 +221,7 @@ export const VEHICLES: Vehicle[] = [
   },
   {
     name: "Toyota Innova Crysta",
-    image:
-      "https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=1200&auto=format&fit=crop",
+    image: "/images/crysta1.jpeg",
     seats: 7,
     fuel: "Diesel",
     ac: "Triple Zone AC",
@@ -793,10 +781,10 @@ const packages: TravelPackage[] = [
       "Comfortable highway cruise via Ahmednagar",
       "Same day or overnight rental options",
     ],
-    image: IMG.bhimashankar,
+    image: IMG.pandharpur,
     imageAlt: "Pandharpur Vitthal Temple darshan package from Shirdi",
     gallery: [
-      { src: IMG.bhimashankar, alt: "Temple devotion" },
+      { src: IMG.pandharpur, alt: "Temple devotion" },
       { src: IMG.carOnRoad, alt: "Pandharpur highway" },
     ],
     reviews: [
@@ -840,10 +828,10 @@ const packages: TravelPackage[] = [
       "Modern funicular ropeway trolley experience",
       "Stunning cliff views of the Sahyadri ranges",
     ],
-    image: IMG.mountain,
+    image: IMG.vani,
     imageAlt: "Saptashringi Devi hill shrine Vani Nashik from Shirdi",
     gallery: [
-      { src: IMG.mountain, alt: "Saptashringi cliff mountains" },
+      { src: IMG.vani, alt: "Saptashringi cliff mountains" },
       { src: IMG.carOnRoad, alt: "Scenic highway to Vani" },
     ],
     reviews: [

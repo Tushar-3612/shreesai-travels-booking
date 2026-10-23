@@ -88,7 +88,7 @@ export default function Navbar() {
   const primaryPhone = settings?.phone || "9225396800";
   const secondaryPhone = settings?.secondaryPhone || "";
   const whatsappNumber =
-    settings?.whatsapp?.replace(/[^0-9]/g, "") || "919225396800";
+    settings?.whatsapp?.replace(/[^0-9]/g, "") || "917498462597";
 
   const bookHref = whatsappHref(
     whatsappNumber,
@@ -140,8 +140,8 @@ export default function Navbar() {
     <>
       <header className="sticky top-0 z-50 w-full max-w-full font-sans transition-all duration-300">
         {/* Top Utility Bar (Desktop only) */}
-        <div className="hidden md:block bg-[#0B1120] text-slate-300 text-xs py-2 border-b border-slate-800 w-full">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+        <div className="hidden lg:block bg-[#0B1120] text-slate-300 text-xs py-2 border-b border-slate-800 w-full">
+          <div className="max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
             {/* Left Badges */}
             <div className="flex items-center gap-5 text-[11px] font-semibold text-slate-300">
               <span className="flex items-center gap-1.5 text-amber-400">
@@ -190,33 +190,50 @@ export default function Navbar() {
         <nav
           className={`w-full transition-all duration-300 ${
             mounted && scrolled
-              ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-slate-200/80 py-2"
-              : "bg-white border-b border-slate-100 py-2.5 sm:py-3"
+              ? "bg-white/98 backdrop-blur-md shadow-lg shadow-slate-900/5 border-b border-orange-200/80 py-2.5 sm:py-3 lg:py-3.5"
+              : "bg-white border-b border-slate-200/90 py-3 sm:py-4 lg:py-4.5 shadow-sm"
           }`}
         >
-          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full">
-            <div className="flex items-center justify-between h-13 sm:h-16 gap-2">
-              {/* Brand Logo */}
-              <Link href="/" className="flex items-center gap-2.5 sm:gap-3 shrink min-w-0 group">
-                <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-[#EA580C] to-[#F59E0B] text-white flex items-center justify-center shadow-md shadow-orange-500/25 shrink-0 group-hover:scale-105 transition-transform">
-                  <FaCarSide size={18} className="text-white" />
+          <div className="max-w-[1560px] mx-auto px-3 sm:px-6 lg:px-8 w-full">
+            <div className="flex items-center justify-between min-h-[66px] sm:min-h-[76px] lg:min-h-[86px] gap-2 lg:gap-4 xl:gap-6">
+              {/* Brand Logo & Prominent Full Title */}
+              <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 shrink-0 group">
+                {/* Large Circular Emblem Logo */}
+                <div className="relative w-12 h-12 sm:w-15 sm:h-15 lg:w-16 lg:h-16 xl:w-[70px] xl:h-[70px] rounded-full overflow-hidden border-2 border-orange-500/50 bg-white shadow-md shadow-orange-500/20 shrink-0 group-hover:scale-105 transition-all p-0.5 flex items-center justify-center ring-2 ring-orange-200/70">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={site?.settings?.logo || "/images/logo.jpeg"}
+                    alt={businessName}
+                    className="w-full h-full object-contain rounded-full"
+                  />
                 </div>
-                <div className="flex flex-col leading-tight min-w-0">
-                  <span className="text-sm sm:text-base lg:text-lg font-black tracking-tight text-slate-900 group-hover:text-primary transition-colors truncate">
-                    {businessName}
-                  </span>
-                  <span className="text-[9px] sm:text-[10px] lg:text-[11px] font-bold text-amber-600 uppercase tracking-wider truncate">
-                    Premier Cabs & Outstation Packages • Shirdi
+
+                {/* Full Uncut Brand Typography */}
+                <div className="flex flex-col justify-center leading-tight">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-1.5 leading-tight">
+                    <span className="text-[15px] sm:text-lg lg:text-xl xl:text-[22px] font-black tracking-tight text-slate-900 group-hover:text-primary transition-colors whitespace-nowrap">
+                      Sai Vaishnavi
+                    </span>
+                    <span className="text-xs sm:text-lg lg:text-xl xl:text-[22px] font-black tracking-tight text-[#EA580C] whitespace-nowrap">
+                      Tours & Travels
+                    </span>
+                  </div>
+                  <span className="text-[9px] sm:text-[10px] lg:text-[11px] font-bold text-amber-700 tracking-wide mt-0.5 whitespace-nowrap flex items-center gap-1">
+                    <span>★ Premier Cabs</span>
+                    <span className="hidden sm:inline text-slate-300">•</span>
+                    <span className="hidden sm:inline">Outstation Packages</span>
+                    <span className="text-slate-300">•</span>
+                    <span className="text-slate-600 font-semibold">Shirdi</span>
                   </span>
                 </div>
               </Link>
 
               {/* Desktop Nav Items */}
-              <div className="hidden md:flex items-center gap-1 xl:gap-2">
+              <div className="hidden lg:flex items-center gap-0.5 xl:gap-1.5">
                 {/* Home */}
                 <Link
                   href="/"
-                  className={`px-3 py-2 text-sm font-extrabold rounded-xl transition-all ${
+                  className={`px-2 xl:px-2.5 py-2 text-xs xl:text-sm font-extrabold rounded-xl transition-all whitespace-nowrap ${
                     pathname === "/"
                       ? "text-primary bg-orange-50 font-black"
                       : "text-slate-700 hover:text-primary hover:bg-slate-50"
@@ -235,11 +252,11 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={() => setDarshanOpen(!darshanOpen)}
-                    className="flex items-center gap-1 px-3 py-2 text-sm font-bold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-xl transition-all"
+                    className="flex items-center gap-1 px-2 xl:px-2.5 py-2 text-xs xl:text-sm font-bold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-xl transition-all whitespace-nowrap"
                   >
-                    <span>Religious Darshans</span>
+                    <span>Darshans</span>
                     <FiChevronDown
-                      size={15}
+                      size={13}
                       className={`transition-transform duration-200 ${
                         darshanOpen ? "rotate-180 text-primary" : "text-slate-400"
                       }`}
@@ -299,11 +316,11 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={() => setHillOpen(!hillOpen)}
-                    className="flex items-center gap-1 px-3 py-2 text-sm font-bold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-xl transition-all"
+                    className="flex items-center gap-1 px-2 xl:px-2.5 py-2 text-xs xl:text-sm font-bold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-xl transition-all whitespace-nowrap"
                   >
                     <span>Hill Stations</span>
                     <FiChevronDown
-                      size={15}
+                      size={13}
                       className={`transition-transform duration-200 ${
                         hillOpen ? "rotate-180 text-primary" : "text-slate-400"
                       }`}
@@ -336,23 +353,23 @@ export default function Navbar() {
                   )}
                 </div>
 
-                {/* Car Tariff Rates */}
+                {/* Tariff Rates */}
                 <Link
                   href="/#tariffs"
                   onClick={() => scrollToAnchor("tariffs")}
-                  className="px-3 py-2 text-sm font-bold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-xl transition-all"
+                  className="px-2 xl:px-2.5 py-2 text-xs xl:text-sm font-bold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-xl transition-all whitespace-nowrap"
                 >
-                  Car Tariff Rates
+                  Tariff Rates
                 </Link>
 
                 {/* Tour Cost Calculator (Highlighted Badge Link) */}
                 <Link
                   href="/#calculator"
                   onClick={() => scrollToAnchor("calculator")}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100/90 border border-amber-300/80 text-amber-900 font-extrabold text-sm transition-all shadow-sm group"
+                  className="flex items-center gap-1.5 px-2.5 xl:px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100/90 border border-amber-300/80 text-amber-900 font-extrabold text-xs xl:text-sm transition-all shadow-sm group whitespace-nowrap"
                 >
                   <HiOutlineCalculator
-                    size={17}
+                    size={15}
                     className="text-amber-700 group-hover:scale-110 transition-transform"
                   />
                   <span>Calculator</span>
@@ -364,50 +381,60 @@ export default function Navbar() {
                 {/* Airport Service */}
                 <Link
                   href="/packages"
-                  className="px-3 py-2 text-sm font-bold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-xl transition-all"
+                  className="px-2 xl:px-2.5 py-2 text-xs xl:text-sm font-bold text-slate-700 hover:text-primary hover:bg-slate-50 rounded-xl transition-all whitespace-nowrap"
                 >
                   Airport Service
                 </Link>
               </div>
 
               {/* Desktop Action Buttons */}
-              <div className="hidden md:flex items-center gap-2.5">
+              <div className="hidden lg:flex items-center gap-2 xl:gap-2.5 shrink-0">
                 {/* WhatsApp Chat Button */}
                 <a
                   href={bookHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 flex items-center justify-center transition-all relative group"
+                  className="w-10 h-10 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366]/20 text-[#25D366] border border-[#25D366]/30 flex items-center justify-center transition-all relative group shadow-sm shrink-0"
                   title="24/7 WhatsApp Chat Support"
                 >
                   <FaWhatsapp size={20} />
-                  <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-[#25D366] border-2 border-white animate-pulse" />
+                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#25D366] border-2 border-white animate-pulse" />
                 </a>
 
                 {/* Primary Book Cab Now Button */}
                 <Link
                   href="/book"
-                  className="px-4 xl:px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FF5500] to-[#FF6B00] hover:from-[#E64D00] hover:to-[#E55F00] text-white font-extrabold text-sm flex items-center gap-2 shadow-lg shadow-orange-500/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  className="px-3.5 xl:px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FF5500] to-[#FF6B00] hover:from-[#E64D00] hover:to-[#E55F00] text-white font-extrabold text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 shadow-lg shadow-orange-500/25 transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap shrink-0"
                 >
                   <FaCarSide size={15} />
                   <span>Book Cab Now</span>
                 </Link>
               </div>
 
-              {/* Mobile Header Right Controls: Quick Call + Hamburger */}
-              <div className="flex items-center gap-1.5 md:hidden shrink-0">
+              {/* Mobile Header Right Controls: Quick Call + WhatsApp + Hamburger */}
+              <div className="flex items-center gap-1.5 sm:gap-2 lg:hidden shrink-0">
                 <a
                   href={`tel:${primaryPhone}`}
-                  className="flex items-center gap-1 px-2.5 py-2 rounded-xl bg-orange-50 text-primary border border-orange-200 text-xs font-black"
+                  className="flex items-center gap-1 px-2.5 sm:px-3 py-2 rounded-xl bg-orange-50 text-primary border border-orange-200 text-xs font-black shadow-sm hover:bg-orange-100 transition-colors"
                 >
                   <FiPhone size={13} />
                   <span>Call</span>
                 </a>
 
+                <a
+                  href={bookHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-xl bg-[#25D366]/15 text-[#25D366] border border-[#25D366]/30 flex items-center justify-center shadow-sm"
+                  title="WhatsApp Chat"
+                >
+                  <FaWhatsapp size={19} />
+                </a>
+
                 <button
                   type="button"
                   onClick={() => setMobileOpen(!mobileOpen)}
-                  className="p-2 rounded-xl text-slate-700 hover:bg-slate-100 border border-slate-200"
+                  className="p-2 sm:p-2.5 rounded-xl text-slate-800 hover:bg-slate-100 border border-slate-200"
                   aria-label="Toggle navigation menu"
                 >
                   {mobileOpen ? <HiX size={22} /> : <HiMenu size={22} />}
@@ -419,8 +446,25 @@ export default function Navbar() {
 
         {/* Mobile Slide-down Drawer */}
         {mobileOpen && (
-          <div className="md:hidden border-b border-slate-200 bg-white/98 backdrop-blur-xl shadow-2xl max-h-[85vh] overflow-y-auto">
+          <div className="lg:hidden border-b border-slate-200 bg-white/98 backdrop-blur-xl shadow-2xl max-h-[85vh] overflow-y-auto">
             <div className="px-4 py-4 space-y-2">
+              {/* Mobile Drawer Brand Banner */}
+              <div className="flex items-center gap-3.5 p-3.5 mb-3 rounded-2xl bg-gradient-to-r from-orange-50 via-amber-50 to-orange-100/50 border border-orange-200 shadow-sm">
+                <div className="w-14 h-14 rounded-full overflow-hidden bg-white shadow-md border-2 border-orange-400 p-0.5 shrink-0 flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={site?.settings?.logo || "/images/logo.jpeg"}
+                    alt={businessName}
+                    className="w-full h-full object-contain rounded-full"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-base font-black text-slate-900 leading-tight">Sai Vaishnavi Tours & Travels</p>
+                  <p className="text-[11px] font-extrabold text-amber-700 mt-0.5">Premier Cabs & Outstation Shirdi</p>
+                  <p className="text-[10px] font-bold text-slate-500 mt-0.5">24x7 Verified Chauffeur Service</p>
+                </div>
+              </div>
+
               <Link
                 href="/"
                 onClick={() => setMobileOpen(false)}

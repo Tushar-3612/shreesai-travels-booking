@@ -29,6 +29,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
   const title = seo?.title || FALLBACK_TITLE;
   const description = seo?.description || FALLBACK_DESCRIPTION;
+  const logoUrl = settings?.logo || "/images/logo.jpeg";
+  const ogImageUrl =
+    seo?.ogImage?.includes("metadata-emblem")
+      ? seo.ogImage
+      : "/images/metadata-emblem.png";
 
   return {
     metadataBase: new URL("https://www.shirdicarrental.com"),
@@ -41,16 +46,28 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: "en_IN",
       siteName: businessName,
-      images: seo?.ogImage ? [{ url: seo.ogImage, width: 1200, height: 630 }] : undefined,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 800,
+          height: 800,
+          alt: businessName,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: seo?.ogImage ? [seo.ogImage] : undefined,
+      images: [ogImageUrl],
     },
     icons: {
-      icon: settings?.favicon || "/favicon.ico",
+      icon: [
+        { url: settings?.favicon || "/images/logo.jpeg" },
+        { url: "/images/logo.jpeg", type: "image/jpeg" },
+      ],
+      shortcut: ["/images/logo.jpeg"],
+      apple: [{ url: "/images/logo.jpeg" }],
     },
     verification: seo?.gscVerification
       ? { google: seo.gscVerification }
@@ -68,6 +85,8 @@ export default function RootLayout({
     <html lang="en" className={`${poppins.variable}`} suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/images/logo.jpeg" type="image/jpeg" />
+        <link rel="apple-touch-icon" href="/images/logo.jpeg" />
       </head>
       <body className="min-h-screen flex flex-col antialiased pb-16 md:pb-0" suppressHydrationWarning>
         <SiteProvider>

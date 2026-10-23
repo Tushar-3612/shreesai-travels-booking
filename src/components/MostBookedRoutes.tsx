@@ -56,7 +56,7 @@ export default function MostBookedRoutes() {
           {track.map((pkg, i) => {
             const isCustom = pkg.priceNum === 0;
             const bookHref = whatsappHref(
-              settings?.whatsapp || "919225396800",
+              settings?.whatsapp || "917498462597",
               packageBookingMessage(businessName, pkg)
             );
             return (

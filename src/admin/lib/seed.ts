@@ -185,7 +185,7 @@ export function seedVehicles(): AdminVehicle[] {
     {
       id: "veh-dzire",
       name: "New Model Swift Dzire",
-      image: "https://imgd.aeplcdn.com/0x0/n/cw/ec/44701/swift-dzire-exterior-right-front-three-quarter-2.jpeg?isig=0&q=80",
+      image: "/images/dzire.jpg",
       price: "₹13 / km",
       seats: 4,
       fuel: "Petrol / CNG",
@@ -197,7 +197,7 @@ export function seedVehicles(): AdminVehicle[] {
     {
       id: "veh-ertiga",
       name: "Maruti Suzuki Ertiga",
-      image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=1200&auto=format&fit=crop",
+      image: "/images/xuv.jpeg",
       price: "₹15 / km",
       seats: 6,
       fuel: "Petrol",
@@ -209,7 +209,7 @@ export function seedVehicles(): AdminVehicle[] {
     {
       id: "veh-innova",
       name: "Toyota Innova Crysta",
-      image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=1200&auto=format&fit=crop",
+      image: "/images/crysta1.jpeg",
       price: "₹20 / km",
       seats: 7,
       fuel: "Diesel",
@@ -331,7 +331,7 @@ export function seedDestinations(): AdminDestination[] {
       name: "Shirdi to Nashik Darshan Package",
       city: "Nashik",
       state: "Maharashtra",
-      image: IMG.trimbakeshwar,
+      image: "/images/nashik_img.avif",
       imageAlt: "Trimbakeshwar Temple Nashik",
       description: "Sacred Pilgrimage to Trimbakeshwar Jyotirlinga, Panchawati (Sita Gufa, Kalaram Mandir) & Muktidham Temple.",
       distance: 250,
@@ -343,7 +343,7 @@ export function seedDestinations(): AdminDestination[] {
       name: "Shirdi to Sambhaji Nagar (Aurangabad) Darshan",
       city: "Aurangabad",
       state: "Maharashtra",
-      image: IMG.ellora,
+      image: "/images/sambhaji_nagar.jpg",
       imageAlt: "Ellora Caves & Grushneshwar",
       description: "Visit 12th Jyotirlinga Grushneshwar, UNESCO Ellora Caves, Bhadra Maruti sleeping Hanuman & Mini Taj Mahal.",
       distance: 240,
@@ -403,7 +403,7 @@ export function seedDestinations(): AdminDestination[] {
       name: "Shirdi to Pandharpur Darshan Package",
       city: "Solapur",
       state: "Maharashtra",
-      image: IMG.bhimashankar,
+      image: "/images/pandharpur.webp",
       imageAlt: "Shri Vitthal Rukmini Mandir",
       description: "Holy abode of Lord Vitthal and Goddess Rukmini on the banks of Chandrabhaga River.",
       distance: 650,
@@ -415,7 +415,7 @@ export function seedDestinations(): AdminDestination[] {
       name: "Shirdi to Saptashringi Devi Darshan",
       city: "Vani Nashik",
       state: "Maharashtra",
-      image: IMG.mountain,
+      image: "/images/vani.jpg",
       imageAlt: "Saptashringi Devi Temple Vani",
       description: "51 Shakti Peethas hill shrine in Vani, Nashik featuring 18-armed rock carved idol and funicular ropeway.",
       distance: 340,
@@ -535,19 +535,28 @@ export function seedDestinations(): AdminDestination[] {
 
 export function seedPricing(): PricingConfig {
   const vehicleDefaults = seedVehicles();
-  const vehiclePricing = vehicleDefaults.map((v, i) => ({
-    id: `vp-${i + 1}`,
-    vehicleId: v.id,
-    name: v.name,
-    type: v.fuel === "Electric" ? "Electric" : "SUV",
-    capacity: v.seats,
-    baseFare: 300,
-    perKm: i === 0 ? 13 : i === 1 ? 11 : 15,
-    perDay: 1800,
-    extraKmRate: i === 0 ? 13 : i === 1 ? 11 : 15,
-    driverCharge: 300,
-    status: "active" as const,
-  }));
+  const vehiclePricing = vehicleDefaults.map((v, i) => {
+    const rate =
+      v.id === "veh-dzire" ? 13 :
+      v.id === "veh-ertiga" ? 15 :
+      v.id === "veh-innova" ? 20 :
+      v.id === "veh-traveller-14" ? 25 :
+      v.id === "veh-traveller-17" ? 28 :
+      v.id === "veh-urbania" ? 38 : 15;
+    return {
+      id: `vp-${i + 1}`,
+      vehicleId: v.id,
+      name: v.name,
+      type: v.fuel === "Electric" ? "Electric" : "SUV",
+      capacity: v.seats,
+      baseFare: 300,
+      perKm: rate,
+      perDay: 1800,
+      extraKmRate: rate,
+      driverCharge: 300,
+      status: "active" as const,
+    };
+  });
 
   const destinationDefaults = seedDestinations().filter((d) => d.distance > 0);
   const destinationPricing = destinationDefaults.map((d, i) => ({
@@ -615,8 +624,8 @@ export function seedSettings(): SiteSettings {
   return {
     businessName: "Sai Vaishnavi Tours and Travels",
     tagline: "Premier Car Rental & Tour Packages in Shirdi",
-    logo: "",
-    favicon: "/favicon.ico",
+    logo: "/images/logo.jpeg",
+    favicon: "/images/logo.jpeg",
     heroSlides: [
       {
         heading: "Sai Vaishnavi Tours and Travels",
@@ -744,7 +753,7 @@ export function seedSettings(): SiteSettings {
         "Book comfortable, affordable, and safe car rentals and taxi services in Shirdi with Sai Vaishnavi Tours and Travels. Local travel, airport transfers, outstation trips. 24/7 service, professional drivers.",
       keywords:
         "car rental Shirdi, taxi service Shirdi, Sai Vaishnavi Tours and Travels, Shirdi airport taxi, car hire Shirdi, outstation taxi Shirdi, Shirdi local sightseeing",
-      ogImage: "",
+      ogImage: "/images/metadata-emblem.png",
       gaId: "",
       gscVerification: "",
     },

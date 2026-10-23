@@ -101,7 +101,13 @@ export default function OurVehicles() {
                     src={car.image}
                     alt={car.name}
                     loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-95 group-hover:opacity-100"
+                    className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-95 group-hover:opacity-100 ${
+                      car.id === "veh-innova" || (car.image && car.image.includes("crysta"))
+                        ? "object-[center_65%]"
+                        : car.id === "veh-ertiga" || (car.image && car.image.includes("xuv"))
+                        ? "object-[center_35%]"
+                        : "object-center"
+                    }`}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
 

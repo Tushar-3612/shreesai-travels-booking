@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { FiMapPin, FiSearch, FiArrowRight, FiNavigation, FiCheck, FiCompass, FiMap } from "react-icons/fi";
-import { FaCarSide } from "react-icons/fa6";
-import { useSiteData } from "@/lib/site";
+import { FaCarSide, FaWhatsapp } from "react-icons/fa6";
+import { useSiteData, whatsappHref } from "@/lib/site";
 import type { AdminDestination } from "@/admin/types";
+import type { TravelPackage } from "@/data/packages";
 
 interface DestinationSectionProps {
   onSelectDestination?: (name: string) => void;
@@ -12,6 +13,9 @@ interface DestinationSectionProps {
 
 export default function DestinationSection({ onSelectDestination }: DestinationSectionProps) {
   const site = useSiteData();
+  const settings = site?.settings;
+  const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
+  const whatsappNumber = settings?.whatsapp?.replace(/[^0-9]/g, "") || "917498462597";
   const destinations: AdminDestination[] = useMemo(() => {
     const list = site?.destinations ?? [];
     return list.filter((d) => d.status === "active");
@@ -73,6 +77,71 @@ export default function DestinationSection({ onSelectDestination }: DestinationS
       return "Hill Station & Fort";
     }
     return "Religious Darshan";
+  };
+
+  const findMatchedPackage = (dest: AdminDestination): TravelPackage | null => {
+    if (!site?.packages) return null;
+    const nameNorm = dest.name.toLowerCase();
+    const cityNorm = dest.city.toLowerCase();
+    return (
+      site.packages.find((p) => {
+        const pName = p.name.toLowerCase();
+        const pDest = p.destination.toLowerCase();
+        return (
+          pName.includes(cityNorm) ||
+          pDest.includes(cityNorm) ||
+          nameNorm.includes(pDest) ||
+          pName === nameNorm
+        );
+      }) ?? null
+    );
+  };
+
+  const getWhatsAppBookingLink = (dest: AdminDestination) => {
+    const matchedPkg = findMatchedPackage(dest);
+    const agency = businessName;
+    const lines: string[] = [
+      `*Namaste ${agency}!* 🙏`,
+      `I want to book the following tour package:`,
+      ``,
+      `📍 *Tour Package:* ${dest.name}`,
+      `🏷️ *Category:* ${getCategoryName(dest.name)}`,
+      `🗺️ *Destination:* ${dest.city}, ${dest.state || "Maharashtra"}`,
+      `📏 *Distance:* ${dest.distance} km Round Trip`,
+    ];
+
+    if (matchedPkg?.route) {
+      lines.push(`🛣️ *Route:* ${matchedPkg.route}`);
+    }
+    if (matchedPkg?.duration) {
+      lines.push(`⏱️ *Duration:* ${matchedPkg.duration}`);
+    }
+    if (matchedPkg?.price && matchedPkg.priceNum > 0) {
+      lines.push(`💰 *Fare:* One Way: ${matchedPkg.price} | Round Trip: ${matchedPkg.roundTrip}`);
+    }
+
+    if (dest.description) {
+      lines.push(``, `📝 *Details:*`, dest.description);
+    }
+
+    const recVehicles = getRecommendedVehicles(dest.distance, dest.name);
+    lines.push(
+      ``,
+      `🚗 *Suitable Vehicles:* ${recVehicles}`,
+      `✅ *Includes:* Clean AC Cabs, Verified Driver, Fuel, Tolls & Parking`
+    );
+
+    if (matchedPkg?.highlights && matchedPkg.highlights.length > 0) {
+      lines.push(``, `✨ *Key Sightseeing Points:*`);
+      matchedPkg.highlights.slice(0, 4).forEach((h, i) => lines.push(`${i + 1}. ${h}`));
+    }
+
+    lines.push(
+      ``,
+      `Please share cab availability, car options (Dzire, Ertiga, Innova Crysta), and confirm my booking.`
+    );
+
+    return whatsappHref(whatsappNumber, lines.join("\n"));
   };
 
   return (
@@ -229,6 +298,7 @@ export default function DestinationSection({ onSelectDestination }: DestinationS
                   {/* Action Row */}
                   <div className="pt-3 border-t border-slate-100 grid grid-cols-2 gap-2">
                     <button
+                      type="button"
                       onClick={() => handleSelect(dest.name)}
                       className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-primary/30 text-primary text-xs font-bold hover:bg-primary/10 transition-colors"
                     >
@@ -236,13 +306,16 @@ export default function DestinationSection({ onSelectDestination }: DestinationS
                       Calculate Fare
                     </button>
 
-                    <button
-                      onClick={() => handleSelect(dest.name)}
-                      className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-primary text-white text-xs font-bold shadow-md shadow-primary/25 hover:bg-primary-dark transition-all"
+                    <a
+                      href={getWhatsAppBookingLink(dest)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-primary text-white text-xs font-bold shadow-md shadow-primary/25 hover:bg-primary-dark hover:shadow-lg transition-all"
                     >
+                      <FaWhatsapp size={14} />
                       Book Tour
-                      <FiArrowRight size={14} />
-                    </button>
+                      <FiArrowRight size={13} />
+                    </a>
                   </div>
                 </div>
               </div>

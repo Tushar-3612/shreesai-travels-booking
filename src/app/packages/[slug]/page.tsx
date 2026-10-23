@@ -64,7 +64,11 @@ export default async function PackagePage({ params }: Props) {
     description: pkg.seoDescription,
     image:
      [pkg.image, ...pkg.gallery.map((g) => g.src)],
-    brand: { "@type": "Brand", name: data.settings.businessName },
+    brand: {
+      "@type": "Brand",
+      name: data.settings.businessName,
+      logo: "https://www.shirdicarrental.com/images/logo.jpeg",
+    },
     sku: `SCR-${pkg.slug.toUpperCase()}`,
     offers: pkg.priceNum > 0
       ? {

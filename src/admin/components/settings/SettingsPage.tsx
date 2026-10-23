@@ -227,7 +227,7 @@ export default function SettingsPage() {
                 <TextInput
                   value={settings.whatsapp}
                   onChange={(e) => patch({ whatsapp: e.target.value })}
-                  placeholder="919225396800"
+                  placeholder="917498462597"
                 />
               </Field>
               <Field label="Email">

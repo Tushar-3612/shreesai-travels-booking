@@ -59,7 +59,7 @@ export default function Hero({
     : ["", ""];
 
   const bookHref = whatsappHref(
-    settings?.whatsapp || "919225396800",
+    settings?.whatsapp || "917498462597",
     bookMessage(businessName, "Hello Sai Vaishnavi Tours and Travels, I would like to book a taxi. Please share details.")
   );
 

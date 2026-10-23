@@ -19,6 +19,18 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     siteName: "Sai Vaishnavi Tours and Travels",
+    images: [
+      {
+        url: "/images/metadata-emblem.png",
+        width: 800,
+        height: 800,
+        alt: "Sai Vaishnavi Travels",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["/images/metadata-emblem.png"],
   },
   alternates: { canonical: "/about" },
   robots: { index: true, follow: true },
@@ -37,6 +49,8 @@ export default async function AboutPage() {
     mainEntity: {
       "@type": "LocalBusiness",
       name: settings.businessName,
+      image: "https://www.shirdicarrental.com/images/logo.jpeg",
+      logo: "https://www.shirdicarrental.com/images/logo.jpeg",
       address: {
         "@type": "PostalAddress",
         streetAddress: settings.address,

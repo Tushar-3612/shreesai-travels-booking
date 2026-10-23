@@ -44,7 +44,7 @@ export default function Topbar({
 
   return (
     <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between gap-3 px-4 sm:px-6 sticky top-0 z-40">
-      <div className="flex items-center gap-3 min-w-0">
+      <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
         <button
           onClick={onMenuClick}
           className="adm-icon-btn lg:hidden shrink-0"
@@ -52,6 +52,11 @@ export default function Topbar({
         >
           <FiMenu size={17} />
         </button>
+        <img
+          src="/images/logo.jpeg"
+          alt="Sai Vaishnavi"
+          className="w-8 h-8 rounded-full object-contain bg-white border border-slate-200 p-0.5 lg:hidden shrink-0"
+        />
         <h2 className="text-sm sm:text-base font-bold text-slate-800 truncate">
           {current?.label ?? "Admin Panel"}
         </h2>

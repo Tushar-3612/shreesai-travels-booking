@@ -63,7 +63,7 @@ export function useSiteData(): SiteData | null {
 
 export function whatsappHref(number: string, text: string) {
   const digits = (number ?? "").replace(/\D/g, "");
-  const clean = digits.length >= 10 ? digits : "919225396800";
+  const clean = digits.length >= 10 ? digits : "917498462597";
   return `https://wa.me/${clean}?text=${encodeURIComponent(text)}`;
 }
 

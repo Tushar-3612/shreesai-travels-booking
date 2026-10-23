@@ -106,12 +106,18 @@ export function toTravelPackage(
     included: pkg.included ?? [],
     notIncluded: seed?.notIncluded ?? [],
     highlights: seed?.highlights ?? [],
-    image: pkg.image,
-    imageAlt: pkg.imageAlt,
-    gallery: (pkg.gallery ?? []).map((src) => ({
-      src,
-      alt: pkg.imageAlt || `${pkg.route} taxi gallery`,
-    })),
+    image:
+      (seed?.image?.startsWith("/images/") ? seed.image : null) ||
+      pkg.image ||
+      seed?.image ||
+      "/images/logo.jpeg",
+    imageAlt: pkg.imageAlt || `${seed?.name ?? deriveName(pkg)} taxi service`,
+    gallery: (seed?.gallery && seed.gallery[0]?.src?.startsWith("/images/")
+      ? seed.gallery
+      : (pkg.gallery ?? []).map((src) => ({
+          src,
+          alt: pkg.imageAlt || `${pkg.route} taxi gallery`,
+        }))),
     reviews: packageReviews.map(toPackageReview),
     faqs: seed?.faqs ?? DEFAULT_FAQS,
     badge: pkg.badge || undefined,
@@ -153,15 +159,133 @@ export async function getSiteSnapshot(): Promise<SiteData> {
     ...Array.from(new Set(adminPackages.map((p) => p.category))),
   ];
 
+  // Guarantee logo, favicon and ogImage fallbacks for Sai Vaishnavi Tours and Travels
+  const safeSettings: SiteSettings = {
+    ...settings,
+    logo: settings?.logo || "/images/logo.jpeg",
+    favicon: settings?.favicon || "/images/metadata-emblem.png",
+    seo: {
+      ...(settings?.seo || {}),
+      ogImage: "/images/metadata-emblem.png",
+    },
+  };
+
+  const safeVehicles = vehicles
+    .filter((v) => v.status === "available")
+    .map((v) => {
+      const name = (v.name || "").toLowerCase();
+      if (v.id === "veh-dzire" || name.includes("dzire")) {
+        return { ...v, image: "/images/dzire.jpg", price: "₹13 / km" };
+      }
+      if (
+        v.id === "veh-ertiga" ||
+        name.includes("ertiga") ||
+        name.includes("maruti")
+      ) {
+        return { ...v, image: "/images/xuv.jpeg", price: "₹15 / km" };
+      }
+      if (
+        v.id === "veh-innova" ||
+        name.includes("innova") ||
+        name.includes("crysta")
+      ) {
+        return { ...v, image: "/images/crysta1.jpeg", price: "₹20 / km" };
+      }
+      return v;
+    });
+
+  const safeDestinations = destinations
+    .filter((d) => d.status === "active")
+    .map((d) => {
+      const name = (d.name || "").toLowerCase();
+      const city = (d.city || "").toLowerCase();
+      if (d.id === "dst-1" || name.includes("nashik") || city.includes("nashik")) {
+        return { ...d, image: "/images/nashik_img.avif" };
+      }
+      if (
+        d.id === "dst-2" ||
+        name.includes("sambhaji") ||
+        name.includes("aurangabad") ||
+        city.includes("aurangabad")
+      ) {
+        return { ...d, image: "/images/sambhaji_nagar.jpg" };
+      }
+      if (d.id === "dst-4" || name.includes("shani") || name.includes("shingnapur")) {
+        return { ...d, image: "/images/shignapur.webp" };
+      }
+      if (d.id === "dst-6" || name.includes("kolhapur")) {
+        return { ...d, image: "/images/mahalaxmi-temple-kolhapur-1-attr-nearby.jpg" };
+      }
+      if (d.id === "dst-7" || name.includes("pandharpur")) {
+        return { ...d, image: "/images/pandharpur.webp" };
+      }
+      if (d.id === "dst-8" || name.includes("saptashringi") || name.includes("vani")) {
+        return { ...d, image: "/images/vani.jpg" };
+      }
+      if (d.id === "dst-10" || name.includes("malshej")) {
+        return { ...d, image: "/images/malshej.webp" };
+      }
+      if (d.id === "dst-11" || name.includes("shivneri")) {
+        return { ...d, image: "/images/shivneri.jpg" };
+      }
+      if (d.id === "dst-12" || name.includes("sinhagad")) {
+        return { ...d, image: "/images/Sinhagad-Fort.avif" };
+      }
+      if (d.id === "dst-13" || name.includes("lonavala") || name.includes("lonavla")) {
+        return { ...d, image: "/images/lonavla.jpg" };
+      }
+      if (d.id === "dst-14" || name.includes("mahabaleshwar") || name.includes("panchgani")) {
+        return { ...d, image: "/images/panchgani-mahabaleshwar-maharashtra-2-attr-hero.jpg" };
+      }
+      if (d.id === "dst-15" || name.includes("igatpuri")) {
+        return { ...d, image: "/images/Igatpuri.jpg" };
+      }
+      if (d.id === "dst-17" || name.includes("ahmednagar") || name.includes("ahilya")) {
+        return { ...d, image: "/images/ahilyanagr.jpg" };
+      }
+      return d;
+    });
+
+  const safePricing: PricingConfig = pricing
+    ? {
+        ...pricing,
+        vehiclePricing: (pricing.vehiclePricing ?? []).map((vp) => {
+          const name = (vp.name || "").toLowerCase();
+          let perKm = vp.perKm;
+          if (vp.vehicleId === "veh-dzire" || name.includes("dzire")) perKm = 13;
+          else if (
+            vp.vehicleId === "veh-ertiga" ||
+            name.includes("ertiga") ||
+            name.includes("maruti")
+          )
+            perKm = 15;
+          else if (
+            vp.vehicleId === "veh-innova" ||
+            name.includes("innova") ||
+            name.includes("crysta")
+          )
+            perKm = 20;
+          else if (vp.vehicleId === "veh-traveller-14" || name.includes("14"))
+            perKm = 25;
+          else if (vp.vehicleId === "veh-traveller-17" || name.includes("17"))
+            perKm = 28;
+          else if (vp.vehicleId === "veh-urbania" || name.includes("urbania"))
+            perKm = 38;
+
+          return { ...vp, perKm, extraKmRate: perKm };
+        }),
+      }
+    : pricing;
+
   return {
-    settings,
+    settings: safeSettings,
     categories,
     packages,
-    vehicles: vehicles.filter((v) => v.status === "available"),
+    vehicles: safeVehicles,
     reviews: approved,
     gallery,
-    destinations: destinations.filter((d) => d.status === "active"),
-    pricing,
+    destinations: safeDestinations,
+    pricing: safePricing,
     stats: { avgRating, reviewCount },
   };
 }

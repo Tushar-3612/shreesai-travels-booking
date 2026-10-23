@@ -32,7 +32,7 @@ export default function Footer() {
   const settings = site?.settings;
 
   const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
-  const logo = settings?.logo || "";
+  const logo = settings?.logo || "/images/logo.jpeg";
   const logoText = splitBusinessName(businessName);
   const services = (site?.packages ?? []).slice(0, 6);
 
@@ -47,26 +47,20 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              {logo ? (
-                // eslint-disable-next-line @next/next/no-img-element
+            <div className="flex items-center gap-3.5 mb-4">
+              <div className="w-14 h-14 rounded-full overflow-hidden bg-white shadow-lg border-2 border-orange-500/50 flex items-center justify-center p-0.5 shrink-0 ring-2 ring-orange-400/30">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={logo}
                   alt={businessName}
-                  className="w-10 h-10 rounded-xl object-contain bg-white shadow-lg"
+                  className="w-full h-full object-contain rounded-full"
                 />
-              ) : (
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-lg">
-                    {businessName.trim().charAt(0) || "S"}
-                  </span>
-                </div>
-              )}
+              </div>
               <div className="flex flex-col">
                 <span className="text-lg font-bold leading-tight text-white">
                   {logoText.line1}
                 </span>
-                <span className="text-xs font-medium text-primary -mt-1">
+                <span className="text-xs font-medium text-primary -mt-0.5">
                   {logoText.line2}
                 </span>
               </div>
@@ -179,11 +173,11 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href={`mailto:${settings?.email || "saivaishnavitourstravels@gmail.com"}`}
+                  href={`mailto:${settings?.email || "autadevishal74@gmail.com"}`}
                   className="flex items-center gap-3 text-sm text-white/60 hover:text-primary transition-colors duration-300"
                 >
                   <FiMail className="text-success shrink-0" size={16} />
-                  {settings?.email || "saivaishnavitourstravels@gmail.com"}
+                  {settings?.email || "autadevishal74@gmail.com"}
                 </a>
               </li>
             </ul>

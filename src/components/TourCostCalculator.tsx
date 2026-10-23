@@ -102,13 +102,37 @@ export function TourCostCalculatorCard({
   const vehicleOptions = useMemo<CalculatorVehicle[]>(() => {
     const list = (pricing?.vehiclePricing ?? [])
       .filter((v: VehiclePricing) => v.status === "active" && v.perKm > 0)
-      .map((v: VehiclePricing) => ({
-        id: v.id,
-        name: v.name,
-        rate: v.perKm,
-        label: `${v.name} — ₹${v.perKm}/km`,
-        seats: `${v.capacity} Seats`,
-      }));
+      .map((v: VehiclePricing) => {
+        const nameLower = (v.name || "").toLowerCase();
+        let rate = v.perKm;
+        if (v.vehicleId === "veh-dzire" || nameLower.includes("dzire")) rate = 13;
+        else if (
+          v.vehicleId === "veh-ertiga" ||
+          nameLower.includes("ertiga") ||
+          nameLower.includes("maruti")
+        )
+          rate = 15;
+        else if (
+          v.vehicleId === "veh-innova" ||
+          nameLower.includes("innova") ||
+          nameLower.includes("crysta")
+        )
+          rate = 20;
+        else if (v.vehicleId === "veh-traveller-14" || nameLower.includes("14"))
+          rate = 25;
+        else if (v.vehicleId === "veh-traveller-17" || nameLower.includes("17"))
+          rate = 28;
+        else if (v.vehicleId === "veh-urbania" || nameLower.includes("urbania"))
+          rate = 38;
+
+        return {
+          id: v.id,
+          name: v.name,
+          rate,
+          label: `${v.name} — ₹${rate}/km`,
+          seats: `${v.capacity} Seats`,
+        };
+      });
 
     if (list.length >= 3) {
       return list;
@@ -175,7 +199,7 @@ export function TourCostCalculatorCard({
 
   const businessName = settings?.businessName || "Sai Vaishnavi Tours & Travels";
   const whatsappNumber =
-    settings?.whatsapp?.replace(/[^0-9]/g, "") || "919225396800";
+    settings?.whatsapp?.replace(/[^0-9]/g, "") || "917498462597";
 
   const handleBookNow = () => {
     const lines = [

@@ -48,7 +48,7 @@ export default function BookingSuccess({ booking }: { booking: AdminBooking }) {
   const phoneDisplay = settings?.phoneDisplay || booking.phone;
 
   const waText = `Hi ${businessName}! I just booked a taxi (Booking ID: ${booking.id}) from ${booking.pickup} to ${booking.drop} on ${booking.date} at ${booking.time}. Please confirm.`;
-  const waHref = whatsappHref(settings?.whatsapp || "919225396800", waText);
+  const waHref = whatsappHref(settings?.whatsapp || "917498462597", waText);
 
   const handleNewBooking = () => {
     router.push("/book");
@@ -81,16 +81,26 @@ export default function BookingSuccess({ booking }: { booking: AdminBooking }) {
           transition={{ duration: 0.7, delay: 0.1 }}
         >
           <div className="rounded-[28px] bg-white border border-border/60 shadow-[0_20px_50px_-25px_rgba(37,99,235,0.3)] overflow-hidden">
-            <div className="bg-gradient-to-br from-primary to-primary-dark px-8 py-7 text-white flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-bold">Booking Details</h2>
-                <p className="text-white/75 text-sm mt-1">
-                  Reference ID: {booking.id}
-                </p>
+            <div className="bg-gradient-to-br from-primary to-primary-dark px-6 sm:px-8 py-6 text-white flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3.5 min-w-0">
+                <div className="w-12 h-12 rounded-full overflow-hidden bg-white p-0.5 border border-white/30 shadow-md shrink-0 flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={settings?.logo || "/images/logo.jpeg"}
+                    alt={businessName}
+                    className="w-full h-full object-contain rounded-full"
+                  />
+                </div>
+                <div className="min-w-0">
+                  <h2 className="text-xl sm:text-2xl font-bold truncate">Booking Confirmation</h2>
+                  <p className="text-white/85 text-xs sm:text-sm mt-0.5 truncate">
+                    {businessName} • Ref: {booking.id}
+                  </p>
+                </div>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 border border-white/20">
-                <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                <span className="text-sm font-semibold text-accent">
+              <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 border border-white/20 shrink-0">
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                <span className="text-xs sm:text-sm font-bold text-amber-300 capitalize">
                   {booking.status}
                 </span>
               </div>

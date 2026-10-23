@@ -35,7 +35,7 @@ export default function PackageDetail({ pkg, allPackages }: PackageDetailProps) 
   const businessName = settings?.businessName || "Sai Vaishnavi Tours and Travels";
   const isCustom = pkg.priceNum === 0;
   const bookText = packageBookingMessage(businessName, pkg);
-  const bookHref = whatsappHref(settings?.whatsapp || "919225396800", bookText);
+  const bookHref = whatsappHref(settings?.whatsapp || "917498462597", bookText);
 
   const rating = site && site.stats.reviewCount > 0 ? site.stats.avgRating : 4.9;
   const ratingText = site && site.stats.reviewCount > 0

@@ -31,21 +31,35 @@ export default function Sidebar({
       <aside
         className={`adm-sidebar lg:translate-x-0 flex flex-col fixed lg:static inset-y-0 ${open ? "open" : ""}`}
       >
-        <div className="h-16 flex items-center gap-3 px-5 border-b border-white/10 shrink-0">
+        {/* Brand Header */}
+        <div className="h-16 flex items-center gap-3 px-4 border-b border-white/10 shrink-0 bg-slate-950/40">
+          <img
+            src="/images/logo.jpeg"
+            alt="Sai Vaishnavi Tours and Travels"
+            className="w-10 h-10 rounded-full object-contain bg-white p-0.5 border border-white/20 shadow-md shrink-0"
+          />
+          <div className="min-w-0">
+            <p className="text-sm font-extrabold text-white truncate">Sai Vaishnavi</p>
+            <p className="text-[10px] font-bold text-amber-400 uppercase tracking-wider truncate">Admin Portal</p>
+          </div>
+        </div>
+
+        {/* User Profile Mini Bar */}
+        <div className="px-4 py-2.5 border-b border-white/5 flex items-center gap-2.5 shrink-0 bg-white/[0.02]">
           {profile.photoUrl ? (
             <img
               src={profile.photoUrl}
               alt={profile.name}
-              className="w-9 h-9 rounded-xl object-cover"
+              className="w-7 h-7 rounded-lg object-cover"
             />
           ) : (
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 text-white font-bold text-sm flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 text-white font-bold text-xs flex items-center justify-center">
               {initials(profile.name)}
             </div>
           )}
           <div className="min-w-0">
-            <p className="text-sm font-bold text-white truncate">{profile.name}</p>
-            <p className="text-[11px] text-slate-400 truncate">{profile.email}</p>
+            <p className="text-xs font-semibold text-white/90 truncate">{profile.name}</p>
+            <p className="text-[10px] text-slate-400 truncate">{profile.email}</p>
           </div>
         </div>
 
