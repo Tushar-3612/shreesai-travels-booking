@@ -219,39 +219,87 @@ export function seedVehicles(): AdminVehicle[] {
       status: "available",
     },
     {
-      id: "veh-traveller-14",
-      name: "Force Tempo Traveller (14 Seater)",
+      id: "veh-winger-ac",
+      name: "Tata Winger Tempo (A/C)",
       image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1200&auto=format&fit=crop",
-      price: "₹25 / km",
-      seats: 14,
+      price: "₹28 / km",
+      seats: 12,
       fuel: "Diesel",
-      ac: "Roof Mounted AC",
+      ac: "Chilling AC",
       transmission: "Manual",
-      description: "Ideal choice for group pilgrimage tours and joint families. 14 reclining pushback seats with Bluetooth music.",
+      description: "Spacious luxury passenger van with individual bucket seats and chilling AC for comfortable family trips.",
       status: "available",
     },
     {
-      id: "veh-traveller-17",
-      name: "Force Tempo Traveller (17 Seater)",
-      image: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=1200&auto=format&fit=crop",
-      price: "₹28 / km",
-      seats: 17,
+      id: "veh-winger-nonac",
+      name: "Tata Winger Tempo (Non A/C)",
+      image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1200&auto=format&fit=crop",
+      price: "₹25 / km",
+      seats: 12,
       fuel: "Diesel",
-      ac: "Dual Blower AC",
+      ac: "Non AC",
       transmission: "Manual",
-      description: "Executive 17-seater minibus outfitted with luxury reclining seats, sound system, and top roof luggage carrier.",
+      description: "Economic 9-12 passenger van for budget-friendly pilgrimage tours and group sightseeing.",
       status: "available",
     },
     {
       id: "veh-urbania",
       name: "Force Urbania Luxury (17 Seater)",
       image: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1200&auto=format&fit=crop",
-      price: "₹38 / km",
+      price: "₹35 / km",
       seats: 17,
       fuel: "Diesel",
       ac: "Dual Roof AC Vents",
       transmission: "Manual",
       description: "Ultra luxury European-designed van with individual USB chargers, panoramic windows, and smooth air suspension.",
+      status: "available",
+    },
+    {
+      id: "veh-tempo-20-ac",
+      name: "Force Tempo Traveller 20 Seater (A/C)",
+      image: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=1200&auto=format&fit=crop",
+      price: "₹32 / km",
+      seats: 20,
+      fuel: "Diesel",
+      ac: "Dual Roof AC",
+      transmission: "Manual",
+      description: "Executive 20-seater minibus with pushback reclining seats, music system, and large luggage carrier.",
+      status: "available",
+    },
+    {
+      id: "veh-tempo-20-nonac",
+      name: "Force Tempo Traveller 20 Seater (Non A/C)",
+      image: "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?q=80&w=1200&auto=format&fit=crop",
+      price: "₹28 / km",
+      seats: 20,
+      fuel: "Diesel",
+      ac: "Non AC",
+      transmission: "Manual",
+      description: "Reliable 20-seater group travel minibus with comfortable seating and ample luggage space.",
+      status: "available",
+    },
+    {
+      id: "veh-tempo-26-ac",
+      name: "Force Tempo Traveller 26 Seater (A/C)",
+      image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1200&auto=format&fit=crop",
+      price: "₹40 / km",
+      seats: 26,
+      fuel: "Diesel",
+      ac: "Triple Blower AC",
+      transmission: "Manual",
+      description: "Spacious 26-seater luxury coach with full AC cooling, mic, sound system, and reclining seats.",
+      status: "available",
+    },
+    {
+      id: "veh-tempo-26-nonac",
+      name: "Force Tempo Traveller 26 Seater (Non A/C)",
+      image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1200&auto=format&fit=crop",
+      price: "₹35 / km",
+      seats: 26,
+      fuel: "Diesel",
+      ac: "Non AC",
+      transmission: "Manual",
+      description: "Best budget option for large groups (up to 26 passengers) with high safety and large luggage storage.",
       status: "available",
     },
   ];
@@ -536,24 +584,34 @@ export function seedDestinations(): AdminDestination[] {
 export function seedPricing(): PricingConfig {
   const vehicleDefaults = seedVehicles();
   const vehiclePricing = vehicleDefaults.map((v, i) => {
-    const rate =
-      v.id === "veh-dzire" ? 13 :
-      v.id === "veh-ertiga" ? 15 :
-      v.id === "veh-innova" ? 20 :
-      v.id === "veh-traveller-14" ? 25 :
-      v.id === "veh-traveller-17" ? 28 :
-      v.id === "veh-urbania" ? 38 : 15;
+    let rate = 15;
+    const nameLower = v.name.toLowerCase();
+    if (v.id.includes("26") || nameLower.includes("26")) {
+      rate = (v.id.includes("non") || nameLower.includes("non")) ? 35 : 40;
+    } else if (v.id.includes("20") || nameLower.includes("20")) {
+      rate = (v.id.includes("non") || nameLower.includes("non")) ? 28 : 32;
+    } else if (v.id.includes("winger") || nameLower.includes("winger")) {
+      rate = (v.id.includes("non") || nameLower.includes("non")) ? 25 : 28;
+    } else if (v.id === "veh-urbania" || nameLower.includes("urbania") || nameLower.includes("urbaniya")) {
+      rate = 35;
+    } else if (v.id === "veh-innova" || nameLower.includes("innova") || nameLower.includes("crysta")) {
+      rate = 20;
+    } else if (v.id === "veh-ertiga" || nameLower.includes("ertiga") || nameLower.includes("maruti")) {
+      rate = 15;
+    } else if (v.id === "veh-dzire" || nameLower.includes("dzire")) {
+      rate = 13;
+    }
     return {
       id: `vp-${i + 1}`,
       vehicleId: v.id,
       name: v.name,
-      type: v.fuel === "Electric" ? "Electric" : "SUV",
+      type: v.seats > 7 ? "Tempo" : v.seats > 4 ? "MUV" : "Sedan",
       capacity: v.seats,
-      baseFare: 300,
+      baseFare: v.seats > 17 ? 600 : v.seats > 7 ? 500 : 300,
       perKm: rate,
-      perDay: 1800,
+      perDay: v.seats > 17 ? 3200 : v.seats > 7 ? 2500 : 1800,
       extraKmRate: rate,
-      driverCharge: 300,
+      driverCharge: v.seats > 7 ? 500 : 300,
       status: "active" as const,
     };
   });

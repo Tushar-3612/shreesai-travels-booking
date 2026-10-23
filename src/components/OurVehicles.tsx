@@ -27,19 +27,29 @@ export default function OurVehicles() {
   const vehicles = site?.vehicles ?? [];
 
   const getLuggageCapacity = (seats: number, name: string) => {
-    if (name.toLowerCase().includes("urbania")) return "12-15 Large Bags & Boot";
-    if (seats >= 14) return "10+ Large Bags & Roof Carrier";
+    const n = name.toLowerCase();
+    if (n.includes("urbania")) return "12-15 Large Bags & Luggage Boot";
+    if (seats >= 24 || n.includes("26")) return "22-26 Bags & Heavy Roof Carrier";
+    if (seats >= 19 || n.includes("20")) return "16-20 Bags & Roof Carrier";
+    if (seats >= 12 || n.includes("winger")) return "10-12 Large Bags & Rear Boot";
     if (seats >= 7) return "4-5 Large Suitcases";
     if (seats >= 6) return "3-4 Medium Bags";
     return "2 Large / 3 Medium Bags";
   };
 
   const getBestSuitableFor = (seats: number, name: string) => {
-    if (name.toLowerCase().includes("urbania")) {
+    const n = name.toLowerCase();
+    if (n.includes("urbania")) {
       return "VIP Groups, Luxury Outstation Pilgrimage Charters & Wedding Trips";
     }
-    if (seats >= 14) {
-      return "Large Group Tours (10-17 passengers), Multi-Day Jyotirlinga Charters";
+    if (seats >= 24 || n.includes("26")) {
+      return "Large Group Tours (20-26 passengers), Multi-Day Jyotirlinga Charters & Wedding Trips";
+    }
+    if (seats >= 19 || n.includes("20")) {
+      return "Medium to Large Pilgrim Groups (16-20 passengers), Shirdi & Nashik Charters";
+    }
+    if (seats >= 12 || n.includes("winger")) {
+      return "Extended Family Groups (9-12 passengers), Comfortable Pilgrimage & Airport Transfers";
     }
     if (seats >= 7) {
       return "VIPs, Seniors, Long Distance Tours (Mumbai, Kolhapur, Mahabaleshwar)";

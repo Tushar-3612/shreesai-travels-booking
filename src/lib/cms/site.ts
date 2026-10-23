@@ -15,7 +15,9 @@ import type {
   GalleryItem,
   PricingConfig,
   SiteSettings,
+  VehiclePricing,
 } from "@/admin/types";
+import { seedVehicles, seedPricing } from "@/admin/lib/seed";
 import { readCollection, writeCollection, type CollectionName } from "./store";
 
 export interface SiteStats {
@@ -170,7 +172,16 @@ export async function getSiteSnapshot(): Promise<SiteData> {
     },
   };
 
-  const safeVehicles = vehicles
+  // Merge seedVehicles to guarantee Winger, 20-Seater, 26-Seater and Urbania are always loaded
+  const seedList = seedVehicles();
+  const allVehicles = [...vehicles];
+  for (const s of seedList) {
+    if (!allVehicles.some((v) => v.id === s.id)) {
+      allVehicles.push(s);
+    }
+  }
+
+  const safeVehicles = allVehicles
     .filter((v) => v.status === "available")
     .map((v) => {
       const name = (v.name || "").toLowerCase();
@@ -190,6 +201,27 @@ export async function getSiteSnapshot(): Promise<SiteData> {
         name.includes("crysta")
       ) {
         return { ...v, image: "/images/crysta1.jpeg", price: "₹20 / km" };
+      }
+      if (name.includes("26") && (name.includes("non") || v.id.includes("non"))) {
+        return { ...v, price: "₹35 / km" };
+      }
+      if (name.includes("26")) {
+        return { ...v, price: "₹40 / km" };
+      }
+      if (name.includes("20") && (name.includes("non") || v.id.includes("non"))) {
+        return { ...v, price: "₹28 / km" };
+      }
+      if (name.includes("20")) {
+        return { ...v, price: "₹32 / km" };
+      }
+      if (name.includes("winger") && (name.includes("non") || v.id.includes("non"))) {
+        return { ...v, price: "₹25 / km" };
+      }
+      if (name.includes("winger")) {
+        return { ...v, price: "₹28 / km" };
+      }
+      if (name.includes("urbania") || name.includes("urbaniya")) {
+        return { ...v, price: "₹35 / km" };
       }
       return v;
     });
@@ -246,36 +278,33 @@ export async function getSiteSnapshot(): Promise<SiteData> {
       return d;
     });
 
-  const safePricing: PricingConfig = pricing
-    ? {
-        ...pricing,
-        vehiclePricing: (pricing.vehiclePricing ?? []).map((vp) => {
-          const name = (vp.name || "").toLowerCase();
-          let perKm = vp.perKm;
-          if (vp.vehicleId === "veh-dzire" || name.includes("dzire")) perKm = 13;
-          else if (
-            vp.vehicleId === "veh-ertiga" ||
-            name.includes("ertiga") ||
-            name.includes("maruti")
-          )
-            perKm = 15;
-          else if (
-            vp.vehicleId === "veh-innova" ||
-            name.includes("innova") ||
-            name.includes("crysta")
-          )
-            perKm = 20;
-          else if (vp.vehicleId === "veh-traveller-14" || name.includes("14"))
-            perKm = 25;
-          else if (vp.vehicleId === "veh-traveller-17" || name.includes("17"))
-            perKm = 28;
-          else if (vp.vehicleId === "veh-urbania" || name.includes("urbania"))
-            perKm = 38;
+  const seedP = seedPricing();
+  const baseVehiclePricing =
+    pricing?.vehiclePricing && pricing.vehiclePricing.length >= 8
+      ? pricing.vehiclePricing
+      : seedP.vehiclePricing;
 
-          return { ...vp, perKm, extraKmRate: perKm };
-        }),
-      }
-    : pricing;
+  const safePricing: PricingConfig = {
+    vehiclePricing: baseVehiclePricing.map((vp) => {
+      const name = (vp.name || "").toLowerCase();
+      let perKm = vp.perKm;
+      if (name.includes("26") && (name.includes("non") || vp.vehicleId?.includes("non"))) perKm = 35;
+      else if (name.includes("26")) perKm = 40;
+      else if (name.includes("20") && (name.includes("non") || vp.vehicleId?.includes("non"))) perKm = 28;
+      else if (name.includes("20")) perKm = 32;
+      else if (name.includes("winger") && (name.includes("non") || vp.vehicleId?.includes("non"))) perKm = 25;
+      else if (name.includes("winger")) perKm = 28;
+      else if (name.includes("urbania") || name.includes("urbaniya")) perKm = 35;
+      else if (vp.vehicleId === "veh-dzire" || name.includes("dzire")) perKm = 13;
+      else if (vp.vehicleId === "veh-ertiga" || name.includes("ertiga") || name.includes("maruti")) perKm = 15;
+      else if (vp.vehicleId === "veh-innova" || name.includes("innova") || name.includes("crysta")) perKm = 20;
+
+      return { ...vp, perKm, extraKmRate: perKm };
+    }),
+    destinationPricing: pricing?.destinationPricing ?? seedP.destinationPricing,
+    extraCharges: pricing?.extraCharges ?? seedP.extraCharges,
+    calculator: pricing?.calculator ?? seedP.calculator,
+  };
 
   return {
     settings: safeSettings,

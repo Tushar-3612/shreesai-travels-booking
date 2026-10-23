@@ -39,25 +39,53 @@ export const DEFAULT_CALCULATOR_VEHICLES: CalculatorVehicle[] = [
     seats: "6/7+1",
   },
   {
-    id: "veh-traveller-14",
-    name: "Force Tempo Traveller (14 Seater)",
-    rate: 25,
-    label: "Force Tempo Traveller (14 Seater) — ₹25/km",
-    seats: "14+1",
+    id: "veh-winger-ac",
+    name: "Winger Tempo (A/C)",
+    rate: 28,
+    label: "Winger Tempo (A/C) — ₹28/km",
+    seats: "9-12",
   },
   {
-    id: "veh-traveller-17",
-    name: "Force Tempo Traveller (17 Seater)",
-    rate: 28,
-    label: "Force Tempo Traveller (17 Seater) — ₹28/km",
-    seats: "17+1",
+    id: "veh-winger-nonac",
+    name: "Winger Tempo (Non A/C)",
+    rate: 25,
+    label: "Winger Tempo (Non A/C) — ₹25/km",
+    seats: "9-12",
   },
   {
     id: "veh-urbania",
-    name: "Force Urbania Luxury (17 Seater)",
-    rate: 38,
-    label: "Force Urbania Luxury (17 Seater) — ₹38/km",
+    name: "Force Urbania Luxury",
+    rate: 35,
+    label: "Force Urbania Luxury — ₹35/km",
     seats: "17+1",
+  },
+  {
+    id: "veh-tempo-20-ac",
+    name: "20 Seater Tempo (A/C)",
+    rate: 32,
+    label: "20 Seater Tempo (A/C) — ₹32/km",
+    seats: "20+1",
+  },
+  {
+    id: "veh-tempo-20-nonac",
+    name: "20 Seater Tempo (Non A/C)",
+    rate: 28,
+    label: "20 Seater Tempo (Non A/C) — ₹28/km",
+    seats: "20+1",
+  },
+  {
+    id: "veh-tempo-26-ac",
+    name: "26 Seater Tempo (A/C)",
+    rate: 40,
+    label: "26 Seater Tempo (A/C) — ₹40/km",
+    seats: "26+1",
+  },
+  {
+    id: "veh-tempo-26-nonac",
+    name: "26 Seater Tempo (Non A/C)",
+    rate: 35,
+    label: "26 Seater Tempo (Non A/C) — ₹35/km",
+    seats: "26+1",
   },
 ];
 
@@ -105,25 +133,28 @@ export function TourCostCalculatorCard({
       .map((v: VehiclePricing) => {
         const nameLower = (v.name || "").toLowerCase();
         let rate = v.perKm;
-        if (v.vehicleId === "veh-dzire" || nameLower.includes("dzire")) rate = 13;
-        else if (
-          v.vehicleId === "veh-ertiga" ||
-          nameLower.includes("ertiga") ||
-          nameLower.includes("maruti")
-        )
-          rate = 15;
-        else if (
-          v.vehicleId === "veh-innova" ||
-          nameLower.includes("innova") ||
-          nameLower.includes("crysta")
-        )
-          rate = 20;
-        else if (v.vehicleId === "veh-traveller-14" || nameLower.includes("14"))
-          rate = 25;
-        else if (v.vehicleId === "veh-traveller-17" || nameLower.includes("17"))
+
+        if (nameLower.includes("26") && (nameLower.includes("non") || nameLower.includes("non-ac") || nameLower.includes("non ac"))) {
+          rate = 35;
+        } else if (nameLower.includes("26")) {
+          rate = 40;
+        } else if (nameLower.includes("20") && (nameLower.includes("non") || nameLower.includes("non-ac") || nameLower.includes("non ac"))) {
           rate = 28;
-        else if (v.vehicleId === "veh-urbania" || nameLower.includes("urbania"))
-          rate = 38;
+        } else if (nameLower.includes("20")) {
+          rate = 32;
+        } else if (nameLower.includes("winger") && (nameLower.includes("non") || nameLower.includes("non-ac") || nameLower.includes("non ac"))) {
+          rate = 25;
+        } else if (nameLower.includes("winger")) {
+          rate = 28;
+        } else if (nameLower.includes("urbania") || nameLower.includes("urbaniya")) {
+          rate = 35;
+        } else if (v.vehicleId === "veh-dzire" || nameLower.includes("dzire")) {
+          rate = 13;
+        } else if (v.vehicleId === "veh-ertiga" || nameLower.includes("ertiga") || nameLower.includes("maruti")) {
+          rate = 15;
+        } else if (v.vehicleId === "veh-innova" || nameLower.includes("innova") || nameLower.includes("crysta")) {
+          rate = 20;
+        }
 
         return {
           id: v.id,
@@ -134,7 +165,7 @@ export function TourCostCalculatorCard({
         };
       });
 
-    if (list.length >= 3) {
+    if (list.length >= 8) {
       return list;
     }
     return DEFAULT_CALCULATOR_VEHICLES;
