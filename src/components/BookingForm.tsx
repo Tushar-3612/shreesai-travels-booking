@@ -13,6 +13,7 @@ const PASSENGER_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const PREDEFINED_LOCATIONS = [
   "Shirdi",
+  "Airport Road, Dwarawati, Shirdi",
   "Shirdi Sai Mandir",
   "Shirdi Airport",
   "Sainagar Shirdi Station",

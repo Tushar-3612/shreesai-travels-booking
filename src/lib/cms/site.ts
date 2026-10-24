@@ -161,9 +161,19 @@ export async function getSiteSnapshot(): Promise<SiteData> {
     ...Array.from(new Set(adminPackages.map((p) => p.category))),
   ];
 
-  // Guarantee logo, favicon and ogImage fallbacks for Sai Vaishnavi Tours and Travels
+  // Guarantee logo, favicon, address and ogImage fallbacks for Sai Vaishnavi Tours and Travels
   const safeSettings: SiteSettings = {
     ...settings,
+    address:
+      settings?.address &&
+      !settings.address.toLowerCase().includes("near sai temple")
+        ? settings.address
+        : "Airport Road, Dwarawati, Shirdi, Maharashtra 423109",
+    googleMapsLink:
+      settings?.googleMapsLink &&
+      !settings.googleMapsLink.toLowerCase().includes("near+sai+temple")
+        ? settings.googleMapsLink
+        : "https://maps.google.com/?q=Airport+Road,+Dwarawati,+Shirdi,+Maharashtra+423109",
     logo: settings?.logo || "/images/logo.jpeg",
     favicon: settings?.favicon || "/images/metadata-emblem.png",
     seo: {

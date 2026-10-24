@@ -160,7 +160,20 @@ export default function Footer() {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-sm text-white/60">
                 <FiMapPin className="text-primary shrink-0 mt-0.5" size={16} />
-                {settings?.address}
+                {settings?.googleMapsLink ? (
+                  <a
+                    href={settings.googleMapsLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-primary transition-colors duration-300"
+                  >
+                    {settings?.address || "Airport Road, Dwarawati, Shirdi, Maharashtra 423109"}
+                  </a>
+                ) : (
+                  <span>
+                    {settings?.address || "Airport Road, Dwarawati, Shirdi, Maharashtra 423109"}
+                  </span>
+                )}
               </li>
               <li>
                 <a

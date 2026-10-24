@@ -60,7 +60,7 @@ export const CONTACT = {
   phoneDisplay: "+91 92253 96800",
   whatsapp: "917498462597",
   email: "autadevishal74@gmail.com",
-  address: "Near Sai Temple, Shirdi, Maharashtra 423109",
+  address: "Airport Road, Dwarawati, Shirdi, Maharashtra 423109",
   whatsappMessage: (text: string) =>
     `https://wa.me/917498462597?text=${encodeURIComponent(text)}`,
 };
