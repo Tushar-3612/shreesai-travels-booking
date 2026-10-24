@@ -67,7 +67,7 @@ export default async function PackagePage({ params }: Props) {
     brand: {
       "@type": "Brand",
       name: data.settings.businessName,
-      logo: "https://www.shirdicarrental.com/images/logo.jpeg",
+      logo: "https://shreesai-travels-booking.vercel.app/images/logo.jpeg",
     },
     sku: `SCR-${pkg.slug.toUpperCase()}`,
     offers: pkg.priceNum > 0
@@ -76,7 +76,7 @@ export default async function PackagePage({ params }: Props) {
           priceCurrency: "INR",
           price: pkg.priceNum,
           availability: "https://schema.org/InStock",
-          url: `https://www.shirdicarrental.com/packages/${pkg.slug}`,
+          url: `https://shreesai-travels-booking.vercel.app/packages/${pkg.slug}`,
           priceValidUntil: "2027-12-31",
         }
       : undefined,

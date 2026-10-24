@@ -45,12 +45,12 @@ export default async function AboutPage() {
     "@type": "AboutPage",
     name: `About ${settings.businessName}`,
     description: metadata.description,
-    url: "https://www.shirdicarrental.com/about",
+    url: "https://shreesai-travels-booking.vercel.app/about",
     mainEntity: {
       "@type": "LocalBusiness",
       name: settings.businessName,
-      image: "https://www.shirdicarrental.com/images/logo.jpeg",
-      logo: "https://www.shirdicarrental.com/images/logo.jpeg",
+      image: "https://shreesai-travels-booking.vercel.app/images/logo.jpeg",
+      logo: "https://shreesai-travels-booking.vercel.app/images/logo.jpeg",
       address: {
         "@type": "PostalAddress",
         streetAddress: settings.address,

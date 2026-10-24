@@ -42,7 +42,7 @@ export default async function ReviewsIndexPage() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: data.settings.businessName,
-    url: "https://www.shirdicarrental.com/reviews",
+    url: "https://shreesai-travels-booking.vercel.app/reviews",
     telephone: data.settings.phone,
     aggregateRating: {
       "@type": "AggregateRating",

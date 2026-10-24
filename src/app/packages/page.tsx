@@ -49,7 +49,7 @@ export default async function PackagesIndex({ searchParams }: Props) {
     "@type": "CollectionPage",
     name: "Taxi Packages from Shirdi",
     description: metadata.description,
-    url: "https://www.shirdicarrental.com/packages",
+    url: "https://shreesai-travels-booking.vercel.app/packages",
     provider: {
       "@type": "LocalBusiness",
       name: data.settings.businessName,
@@ -60,7 +60,7 @@ export default async function PackagesIndex({ searchParams }: Props) {
     hasPart: data.packages.map((p) => ({
       "@type": "Trip",
       name: p.name,
-      url: `https://www.shirdicarrental.com/packages/${p.slug}`,
+      url: `https://shreesai-travels-booking.vercel.app/packages/${p.slug}`,
       description: p.description,
     })),
   };

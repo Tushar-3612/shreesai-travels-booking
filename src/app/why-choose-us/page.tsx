@@ -44,7 +44,7 @@ export default async function WhyChooseUsPage() {
     "@type": "AboutPage",
     name: `Why Choose ${data.settings.businessName}`,
     description: metadata.description,
-    url: "https://www.shirdicarrental.com/why-choose-us",
+    url: "https://shreesai-travels-booking.vercel.app/why-choose-us",
     about: {
       "@type": "LocalBusiness",
       name: data.settings.businessName,

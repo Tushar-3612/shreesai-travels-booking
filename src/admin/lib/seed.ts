@@ -806,9 +806,9 @@ export function seedSettings(): SiteSettings {
     secondaryColor: "#0F172A",
     accentColor: "#F59E0B",
     seo: {
-      title: "Sai Vaishnavi Tours and Travels | Reliable Car & Taxi Booking in Shirdi",
+      title: "Sai Vaishnavi Tours and Travels | Best Cab Booking in Shirdi",
       description:
-        "Book comfortable, affordable, and safe car rentals and taxi services in Shirdi with Sai Vaishnavi Tours and Travels. Local travel, airport transfers, outstation trips. 24/7 service, professional drivers.",
+        "Book safe, reliable, and affordable taxi services in Shirdi with Sai Vaishnavi Tours and Travels. 24/7 Shirdi Airport drop, temple darshan, and outstation cabs to Pune, Mumbai, Nashik.",
       keywords:
         "car rental Shirdi, taxi service Shirdi, Sai Vaishnavi Tours and Travels, Shirdi airport taxi, car hire Shirdi, outstation taxi Shirdi, Shirdi local sightseeing",
       ogImage: "/images/metadata-emblem.png",
